@@ -7,75 +7,37 @@ import {
 } from "react-router-dom";
 
 import * as api from './api';
-import logo from './logo.svg';
+import IndexPage from './pages/IndexPage';
+import OtherPage from './pages/OtherPage.js';
 import './App.css';
 
-const MainPage = () => {
-  const [viewer, setViewer] = useState({});
-
-  useEffect(() => {
-    api.fetchViewer().then((viewer) => {
-      setViewer(viewer);
-    });
-  });
-
+const Header = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div>
-          {viewer._id}
-        </div>
-      </header>
-    </div>
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/other">Other</Link>
+        </li>
+      </ul>
+    </nav>
   );
-};
+}
 
-const OtherPage = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-            Other
-        </a>
-      </header>
-    </div>
-  );
-};
 
 const App = () => {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/other">Other</Link>
-            </li>
-          </ul>
-        </nav>
-
+        <Header/>
         <Switch>
           <Route path="/other">
             <OtherPage />
           </Route>
           <Route path="/">
-            <MainPage />
+            <IndexPage />
           </Route>
         </Switch>
       </div>
