@@ -1,9 +1,8 @@
-name = "vsvirus"
+name = "feldhelden"
 type = "webpack"
-account_id = ""
-workers_dev = true
-route = ""
-zone_id = ""
+account_id = "e17e0e431c57d27e3634e7e0bcdb8a9d"
+route = "*feldhelden.org/*"
+zone_id = "00f1c18bca3c12a340f884a6fe0e9c6c"
 
 [site]
 bucket = './build'
