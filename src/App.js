@@ -9,9 +9,24 @@ import {
 import * as api from './api';
 import IndexPage from './pages/IndexPage';
 import OtherPage from './pages/OtherPage.js';
+import { useAuth0, Auth0Provider } from "./react-auth0-spa";
+import authConfig from "./auth_config.json";
+import history from "./utils/history";
+import PrivateRoute from "./components/PrivateRoute";
+
 import './App.css';
 
+const onRedirectCallback = appState => {
+  history.push(
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname
+  );
+};
+
 const Header = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
   return (
     <nav>
       <ul>
@@ -21,6 +36,13 @@ const Header = () => {
         <li>
           <Link to="/other">Other</Link>
         </li>
+        <li>
+          {!isAuthenticated && (
+            <button onClick={() => loginWithRedirect({})}>Log in</button>
+          )}
+
+          {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+        </li>
       </ul>
     </nav>
   );
@@ -29,19 +51,26 @@ const Header = () => {
 
 const App = () => {
   return (
+    <Auth0Provider
+      domain={authConfig.domain}
+      client_id={authConfig.clientId}
+      redirect_uri={window.location.origin}
+      onRedirectCallback={onRedirectCallback}
+    >
     <Router>
       <div>
         <Header/>
         <Switch>
-          <Route path="/other">
+          <PrivateRoute path="/other">
             <OtherPage />
-          </Route>
+          </PrivateRoute>
           <Route path="/">
             <IndexPage />
           </Route>
         </Switch>
       </div>
     </Router>
+    </Auth0Provider>
   );
 };
 
