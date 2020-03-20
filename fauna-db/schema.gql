@@ -1,0 +1,54 @@
+type JobDetail {
+  relatedPosting: JobPosting!
+  positionNeeded: String!
+  amountNeeded: Int!
+}
+
+type JobContact {
+   lat: Float!
+   lon: Float!
+   street: String!
+   streetNumber: String!
+   zipCode: String!
+   city: String!
+}
+
+type JobPosting {
+    title: String!
+    jobOwner: User!
+    description: String!
+    jobContact: JobContact!
+    jobDetails: [JobDetail]!
+}
+
+enum USER_TYPE {
+    HELPER
+    FARMER
+}
+
+type User {
+    userType: USER_TYPE!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phone: String!
+
+}
+
+enum APPLICATION_STATUS {
+    APPLIED
+    DECLINED
+    ACCEPTED
+}
+
+type JobApplication {
+    jobPosting: JobPosting!
+    position: String!
+    applicant: User!
+}
+
+
+type Query {
+   viewer: User
+   jobs: [JobPosting]
+}
