@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom";
 
+import * as api from './api';
 import logo from './logo.svg';
 import './App.css';
 
@@ -13,16 +14,10 @@ const MainPage = () => {
   const [viewer, setViewer] = useState({});
 
   useEffect(() => {
-    async function fetchData() {
-      fetch("/api/planets/4/")
-        .then(res => console.log("res", res) || res.json())
-        .then(res => console.log("res2", res) || setViewer(res.viewer));
-    }
-
-    fetchData();
+    api.fetchViewer().then((viewer) => {
+      setViewer(viewer);
+    });
   });
-
-  console.log("id", viewer._id);
 
   return (
     <div className="App">
