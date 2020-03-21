@@ -63,6 +63,7 @@ const LogicWrapper = ({ children }) => {
       onRedirectCallback={onRedirectCallback}
     >
       <Router>
+
         {children}
       </Router>
     </Auth0Provider>
@@ -78,23 +79,25 @@ const App = () => {
       </Helmet>
       <div>
         <Header/>
-        <Switch>
-          <PrivateRoute path="/other">
-            <OtherPage />
-          </PrivateRoute>
-          <PrivateRoute path="/signup">
-            <SignupPage />
-          </PrivateRoute>
-          <PrivateRoute path="/userdashboard">
-            <UserDashboardPage />
-          </PrivateRoute>
-          <PrivateRoute path="/farmerdashboard">
-            <FarmerDashboardPage />
-          </PrivateRoute>
-          <Route path="/">
-            <IndexPage />
-          </Route>
-        </Switch>
+        <div className="container mx-auto">
+          <Switch>
+            <PrivateRoute path="/other">
+              <OtherPage/>
+            </PrivateRoute>
+            <PrivateRoute path="/signup">
+              <SignupPage/>
+            </PrivateRoute>
+            <PrivateRoute path="/userdashboard">
+              <UserDashboardPage/>
+            </PrivateRoute>
+            <PrivateRoute path="/farmerdashboard">
+              <FarmerDashboardPage />
+            </PrivateRoute>
+            <Route path="/">
+              <IndexPage/>
+            </Route>
+          </Switch>
+        </div>
       </div>
     </LogicWrapper>
   );
