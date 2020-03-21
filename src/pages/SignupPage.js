@@ -3,17 +3,20 @@ import {useHistory} from "react-router-dom";
 
 import * as api from '../api';
 import {useAuth0} from "../react-auth0-spa";
-import { useInput } from '../hooks/input-hook';
+import {useInput} from '../hooks/input-hook';
 
 const SignupPage = () => {
-    const {isAuthenticated, getIdTokenClaims} = useAuth0();
+    const {isAuthenticated, getIdTokenClaims,user} = useAuth0();
     const [jwt, setJwt] = useState();
-    const [secrets, setSecrets] = useState({});
+    const [secrets, setSecrets, error, setError] = useState({});
     const history = useHistory();
 
 
-    const { value:firstName, bind:bindFirstName, reset:resetFirstName } = useInput('');
-    const { value:lastName, bind:bindLastName, reset:resetLastName } = useInput('');
+    const {value: firstName, bind: bindFirstName, reset: resetFirstName} = useInput('');
+    const {value: lastName, bind: bindLastName, reset: resetLastName} = useInput('');
+    const {value: email, bind: bindEmail, reset: resetEmail} = useInput('');
+    const {value: phone, bind: bindPhone, reset: resetPhone} = useInput('');
+    const {value: userType, bind: bindUserType, reset: resetUserType} = useInput('');
 
 
     useEffect(() => {
@@ -23,6 +26,7 @@ const SignupPage = () => {
 
         async function fetch() {
             const newJwt = (await getIdTokenClaims()).__raw;
+
             if (jwt) {
                 return;
             }
@@ -46,19 +50,38 @@ const SignupPage = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        alert(`Submitting Name ${firstName} ${lastName}`);
-        resetFirstName();
-        resetLastName();
-    }
+        console.log(user);
+        const authOid = user.sub;
+        const userDetails = {
+            firstName:firstName,
+            lastName:lastName,
+            email:email,
+            phone:phone,
+            auth0Id: authOid,
+            userType: userType
+        }
+
+        console.log(userDetails);
+
+        api.postUserDetails(jwt,userDetails).then((responseData)=> {
+
+            alert("Succesfully registered");
+
+        }).catch((test)=>{
+
+            setError("Registratierung fehlgeschlagen bitte probiere es nochmal");
+
+        });
+
+    };
 
 
     if (!isAuthenticated) {
-        return <div>Hallo Max!</div>;
+        return <div>Loading</div>;
     }
 
     return (
         <div className="signup-page object-center">
-            asdfasfas
             <form className="max-w-lg object-center" onSubmit={handleSubmit}>
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -94,7 +117,8 @@ const SignupPage = () => {
                         </label>
                         <input
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="email" type="email" placeholder="sabine.pietsch@company.de" value="test@test.de"/>
+                            id="email" type="email" placeholder="sabine.pietsch@company.de"
+                            value="test@test.de"  {...bindEmail}/>
                         <p className="text-gray-600 text-xs italic">Bitte gebe eine valide Email Addresse ein</p>
                     </div>
                 </div>
@@ -108,9 +132,11 @@ const SignupPage = () => {
 
                         <div className="inline-block relative w-64">
                             <select
-                                className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded hover:border-gray-500 leading-tight py-3 px-4 mb-3 focus:outline-none focus:bg-white focus:border-gray-500">
-                                <option>Feldheld</option>
-                                <option>Landwirt</option>
+                                className="block appearance-none w-full bg-gray-200 text-gray-700 border border-gray-200 rounded hover:border-gray-500 leading-tight py-3 px-4 mb-3 focus:outline-none focus:bg-white focus:border-gray-500"
+                                {...bindUserType}
+                            >
+                                <option>HELPER</option>
+                                <option>FARMER</option>
                             </select>
                             <div
                                 className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -132,7 +158,7 @@ const SignupPage = () => {
                         </label>
                         <input
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="email" type="text" placeholder="0176 00112233"/>
+                            id="email" type="text" placeholder="0176 00112233" {...bindPhone}/>
                         <p className="text-gray-600 text-xs italic">Bitte gib deine Telefonnumer ein</p>
                     </div>
                 </div>
