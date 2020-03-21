@@ -101,7 +101,19 @@ async function handleEvent(event) {
      * by configuring the function `mapRequestToAsset`
      */
     // options.mapRequestToAsset = handlePrefix(/^\/docs/)
-    options.mapRequestToAsset = serveSinglePageApp;
+    options.mapRequestToAsset = (req) => {
+      const knownRoutes = [
+        "/other",
+        "/signup",
+      ]
+
+      const isInKnownRoutes = knownRoutes.find((n) => new URL(req.url).pathname.startsWith(n));
+      if (isInKnownRoutes) {
+        return new Request(`${new URL(req.url).origin}/index.html`, req);
+      } else {
+        return serveSinglePageApp(req);
+      }
+    };
 
     try {
       if (DEBUG) {

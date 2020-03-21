@@ -1,8 +1,9 @@
 const getUrlBase = () => {
-  let apiBase = "/";
-  if (window.location.hostname === "localhost") {
-    apiBase = "https://feldhelden.org/";
-  }
+  // let apiBase = "/";
+  // if (window.location.hostname === "localhost") {
+    // apiBase = "https://feldhelden.org/";
+  // }
+  const apiBase = "https://feldhelden.org/";
 
   return apiBase;
 }
