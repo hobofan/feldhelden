@@ -136,3 +136,7 @@ nav {
     transform: scale(0.9);
   }
 }
+
+.ais-GeoSearch, .ais-GeoSearch-map {
+  height: 100%;
+}
