@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
+import {useInput} from "../hooks/input-hook";
+import * as api from "../api";
 
 const customStyles = {
     content : {
@@ -17,6 +19,7 @@ Modal.setAppElement('#root');
 
 export const JobsCard = (props) => {
     const [modalIsOpen,setIsOpen] = useState(false)
+    const {value: info, bind: bindInfo, reset: resetInfo} = useInput('');
 
     function openModal() {
         setIsOpen(true);
@@ -24,6 +27,23 @@ export const JobsCard = (props) => {
     function closeModal(){
         setIsOpen(false);
     }
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+
+
+        /*api.postUserDetails(jwt,userDetails).then((responseData)=> {
+            if (userDetails.userType === "FARMER") {
+                history.replace("/farmerdashboard");
+            } else {
+                history.replace("/userdashboard");
+            }
+        }).catch((error)=>{
+            console.log(error);
+            setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
+        });*/
+
+    };
     const jobDetailFields =  props && props.jobDetails.data.map(detail => {
         return (<span
             key={detail._id}
@@ -43,7 +63,10 @@ export const JobsCard = (props) => {
             >
                 <div className="container w-full">
                     <div className="font-bold text-2xl mb-2 mr-2">{props.title}</div>
+                    <form className="max-w-lg m-auto" onSubmit={handleSubmit}>
 
+
+                    </form>
                 </div>
             </Modal>
 
