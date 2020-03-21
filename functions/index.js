@@ -54,10 +54,10 @@ const handleApiRequest = async (request) => {
     return await handleListJobPostings(request)
   } else if (routeUrl.startsWith('/api/me/farmer/createjobposting')) {
     return await handleCreateFarmerJobPostings(request);
-  } else if (routeUrl.startsWith('/api/me/helper/jobapplication')) {
-    return await handleCreateJobApplication(request);
   } else if (routeUrl.startsWith('/api/me/helper/jobapplications/list')) {
     return await handleListMyApplications(request);
+  } else if (routeUrl.startsWith('/api/me/helper/jobapplication')) {
+    return await handleCreateJobApplication(request);
   } else {
     return null;
   }
