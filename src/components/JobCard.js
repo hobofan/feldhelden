@@ -1,16 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Modal from 'react-modal';
 import {useInput} from "../hooks/input-hook";
 import * as api from "../api";
+import {useAuth0} from "../react-auth0-spa";
 
 const customStyles = {
     content : {
-        top                   : '20%',
-        left                  : '50%',
-        right                 : 'auto',
+        top                   : '40%',
+        left                  : '40%',
+        right                 : '40%',
         bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+        marginRight           : '-20%',
+        transform             : 'translate(-40%, -40%)',
+        overflow              : 'scroll'
     }
 };
 
@@ -18,8 +20,15 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const JobsCard = (props) => {
-    const [modalIsOpen,setIsOpen] = useState(false)
-    const {value: info, bind: bindInfo, reset: resetInfo} = useInput('');
+    const {isAuthenticated, getIdTokenClaims,user,loading} = useAuth0();
+    const [modalIsOpen,setIsOpen] = useState(false);
+
+    const [jwt, setJwt] = useState();
+    const [successModalIsOpen,setSuccessModalIsOpen] = useState(false);
+    const [error, setError] = useState('');
+
+    const {value: info, bind: bindInfo} = useInput('');
+    const {value: position, bind: bindPosition} = useInput('');
 
     function openModal() {
         setIsOpen(true);
@@ -28,20 +37,40 @@ export const JobsCard = (props) => {
         setIsOpen(false);
     }
 
+
+    useEffect(() => {
+        if (!isAuthenticated || jwt) {
+            return;
+        }
+        async function fetch() {
+            const newJwt = (await getIdTokenClaims()).__raw;
+            if (jwt) {
+                return;
+            }
+            setJwt(newJwt);
+        }
+        fetch();
+    }, [isAuthenticated, getIdTokenClaims, setJwt, jwt]);
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
-
-        /*api.postUserDetails(jwt,userDetails).then((responseData)=> {
-            if (userDetails.userType === "FARMER") {
-                history.replace("/farmerdashboard");
-            } else {
-                history.replace("/userdashboard");
+        const requestData = {
+            jobApplication: {
+                position: "test",
+                info:info
+            },
+            jobPosting: {
+                _id: props._id
             }
+        }
+
+        api.postJobApplication(jwt,requestData).then((responseData)=> {
+            alert("success")
         }).catch((error)=>{
             console.log(error);
             setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
-        });*/
+        });
 
     };
     const jobDetailFields =  props && props.jobDetails.data.map(detail => {
@@ -62,8 +91,23 @@ export const JobsCard = (props) => {
                 contentLabel="Example Modal"
             >
                 <div className="container w-full">
-                    <div className="font-bold text-2xl mb-2 mr-2">{props.title}</div>
-                    <form className="max-w-lg m-auto" onSubmit={handleSubmit}>
+                    <div className="font-bold text-2xl mb-2 ">Bewerbung für "{props.title}"</div>
+                    <form className="w-full" onSubmit={handleSubmit}>
+                        <div className="w-full">
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                   htmlFor="email">
+                                Deine Qualifikationen
+                            </label>
+                            <textarea
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="email" type="text" placeholder="Deine Bewerbung hier"
+                                {...bindInfo}/>
+                        </div>
+                        <div className="w-full mx-auto">
+                            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                Jetzt Feldheld werden!
+                            </button>
+                        </div>
 
 
                     </form>

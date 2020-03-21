@@ -32,6 +32,8 @@ const handleApiRequest = async (request) => {
     return await handleListJobPostings(request)
   } else if (routeUrl.startsWith('/api/me/farmer/createjobposting')) {
     return await handleCreateFarmerJobPostings(request);
+  } else if (routeUrl.startsWith('/api/me/helper/jobapplication')) {
+    return await handleCreateJobApplication(request);
   } else {
     return null;
   }
@@ -190,6 +192,36 @@ const handleCreateFarmerJobPostings = async (request) => {
 
   const variables = {
     data: jobPosting,
+  };
+
+  const data = await graphQLClient.request(query, variables);
+  return data
+};
+
+
+const handleCreateJobApplication = async (request) => {
+  const graphQLClient = makeGQLClient();
+  if (!request.jwt) {
+    return null;
+  }
+  const bodyText = await request.text();
+  const body =  JSON.parse(bodyText);
+  const userId = await getFaunaUserIdFromJwt(request.jwt);
+  const query = `
+    mutation CreateJobApplication($data: JobApplicationInput!){
+      createJobApplication(data: $data) {
+        _id
+      }
+    }
+  `;
+
+  const {jobApplication , jobPosting} = body;
+
+  jobApplication.jobPosting = { connect: jobPosting._id };
+  jobApplication.applicant = { create: userId };
+
+  const variables = {
+    data: jobApplication,
   };
 
   const data = await graphQLClient.request(query, variables);

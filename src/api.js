@@ -110,6 +110,22 @@ const postJobPosting = async  (jwt,content) => {
       .then(res => res);
 }
 
+const postJobApplication = async  (jwt,content) => {
+  const apiBase = getApiBase();
+
+  return await fetch(`${apiBase}pi/me/helper/jobapplication`, {
+    method: 'POST',
+    headers: {
+      Authorization: authHeader(jwt),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(content)
+  })
+      .then(res => res.json())
+      .then(res => res);
+}
+
 export {
   fetchViewer,
   fetchSecrets,
@@ -120,4 +136,5 @@ export {
   postUserDetails,
   postJobPosting,
   listJobPostings,
+  postJobApplication
 };
