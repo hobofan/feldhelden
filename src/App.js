@@ -20,6 +20,7 @@ import history from "./utils/history";
 import PrivateRoute from "./components/PrivateRoute";
 
 import './App.css';
+import ApplicationDashboardPage from "./pages/ApplicationDashboardPage";
 
 const onRedirectCallback = appState => {
   history.push(
@@ -63,6 +64,9 @@ const App = () => {
             </PrivateRoute>
             <PrivateRoute path="/userdashboard">
               <UserDashboardPage/>
+            </PrivateRoute>
+            <PrivateRoute path="/helper/applications">
+              <ApplicationDashboardPage/>
             </PrivateRoute>
             <PrivateRoute path="/farmerdashboard">
               <FarmerDashboardPage />
