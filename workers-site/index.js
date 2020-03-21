@@ -65,8 +65,7 @@ async function handleEvent(event) {
   router.options(".*", () => {
     return handleOptions(event.request);
   })
-  router.get("/api/.*", async () => {
-
+  const handleApi = async () => {
     let decodedJwt = null;
     if (await isValidJwt(event.request)) {
       decodedJwt = decodeJwt(getJwt(event.request));
@@ -91,7 +90,9 @@ async function handleEvent(event) {
         }
       }
     );
-  })
+  };
+  router.get("/api/.*", handleApi);
+  router.post("/api/.*", handleApi);
   router.get(".*", async () => {
     const url = new URL(event.request.url)
     let options = {}
