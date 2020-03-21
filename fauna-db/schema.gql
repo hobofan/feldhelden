@@ -1,5 +1,5 @@
 type JobDetail {
-  relatedPosting: JobPosting!
+  relatedPosting: JobPosting
   positionNeeded: String!
   amountNeeded: Int!
 }

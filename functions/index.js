@@ -2,7 +2,7 @@ import { GraphQLClient } from 'graphql-request';
 
 const makeGQLClient = () => {
   const endpoint = 'https://graphql.fauna.com/graphql'
-  const token = FAUNADB_SECRET; // Via `wranger secret`
+  const token = FAUNADB_SECRET; // Via `wrangler secret`
 
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
@@ -25,6 +25,8 @@ const handleApiRequest = async (request) => {
   } else if (routeUrl.startsWith('/api/currentuser')) {
 
     return await handleCurrentUser(request);
+  } else if (routeUrl.startsWith('/api/signup')) {
+    return await handleSignUpPost();
   } else {
     return await handleFetchViewer();
   }
@@ -52,27 +54,21 @@ const handleCurrentUser = async (request) => {
     }
   `
 
-  const data = await graphQLClient.request(query)
+  const data = await graphQLClient.request(query);
 
   return data;
 }
 
-const handleFetchViewer = async () => {
+const handleSignUpPost= async () => {
   const graphQLClient = makeGQLClient();
 
-  const query = /* GraphQL */ `
-    {
-      viewer {
-        _id
-        firstName
-        lastName
-      }
-    }
-  `
+  if (!request.jwt) {
+    return null;
+  }
 
-  const data = await graphQLClient.request(query)
+  const auth0UserId = request.jwt.payload.sub;
 
-  return data;
-}
+  return {"user":"test"}
+};
 
 export {handleApiRequest};
