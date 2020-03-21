@@ -12,6 +12,7 @@ import IndexPage from './pages/IndexPage';
 import OtherPage from './pages/OtherPage.js';
 import SignupPage from './pages/SignupPage.js';
 import UserDashboardPage from './pages/UserDashboardPage.js';
+import FarmerDashboardPage from './pages/FarmerDashboardPage.js';
 import { useAuth0, Auth0Provider } from "./react-auth0-spa";
 import authConfig from "./auth_config.json";
 import history from "./utils/history";
@@ -86,6 +87,9 @@ const App = () => {
           </PrivateRoute>
           <PrivateRoute path="/userdashboard">
             <UserDashboardPage />
+          </PrivateRoute>
+          <PrivateRoute path="/farmerdashboard">
+            <FarmerDashboardPage />
           </PrivateRoute>
           <Route path="/">
             <IndexPage />

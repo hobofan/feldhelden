@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from "react-router-dom";
 
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
 
-const SignupPage = () => {
+const FarmerDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [jwt, setJwt] = useState();
   const [secrets, setSecrets] = useState({});
-  const history = useHistory();
 
   useEffect(() => {
     if (!isAuthenticated || jwt) {
@@ -28,28 +26,18 @@ const SignupPage = () => {
     if (!jwt) {
       return;
     }
-    api.fetchCurrentUser(jwt).then((currentUser) => {
-      if (currentUser?.currentUser?._id) {
-        if (currentUser.currentUser.userType === "FARMER") {
-          history.replace("/farmerdashboard");
-        } else {
-          history.replace("/userdashboard");
-        }
-      }
-    });
+    api.fetchSecrets(jwt).then(setSecrets);
   }, [jwt]);
 
-  if (!isAuthenticated) {
-    return <div></div>;
-  }
+  console.log('secrets', secrets);
 
   return (
     <div className="signup-page">
       <p>
-        Dieser User muss sein Profil noch anlegen
+        Dieser Farmer hat bereits einen Account
       </p>
     </div>
   );
 };
 
-export default SignupPage;
+export default FarmerDashboardPage;

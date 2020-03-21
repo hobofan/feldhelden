@@ -107,7 +107,7 @@ async function handleEvent(event) {
         "/other",
         "/signup",
         "/userdashboard",
-        "/farmdashboard",
+        "/farmerdashboard",
       ]
 
       const isInKnownRoutes = knownRoutes.find((n) => new URL(req.url).pathname.startsWith(n));
