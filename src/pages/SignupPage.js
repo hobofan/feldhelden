@@ -4,15 +4,17 @@ import {useHistory} from "react-router-dom";
 import * as api from '../api';
 import {useAuth0} from "../react-auth0-spa";
 import {useInput} from '../hooks/input-hook';
+import {LoadingSpinner} from "../components/Loading";
 
 
 
 const SignupPage = () => {
-    const {isAuthenticated, getIdTokenClaims,user} = useAuth0();
+    const {isAuthenticated, getIdTokenClaims,user,loading} = useAuth0();
     const [jwt, setJwt] = useState();
     const [secrets, setSecrets] = useState({});
     const [error, setError] = useState('');
     const [userType, setUserType] = useState(undefined);
+    const [userRefreshed, setUserRefreshed] = useState(false);
     const history = useHistory();
 
 
@@ -54,6 +56,8 @@ const SignupPage = () => {
                 } else {
                   history.replace("/userdashboard");
                 }
+            } else {
+                setUserRefreshed(true)
             }
         });
     }, [jwt]);
@@ -70,7 +74,7 @@ const SignupPage = () => {
             phone:phone,
             auth0Id: authOid,
             userType: userType
-        }
+        };
 
         api.postUserDetails(jwt,userDetails).then((responseData)=> {
             if (userDetails.userType === "FARMER") {
@@ -79,19 +83,23 @@ const SignupPage = () => {
                 history.replace("/userdashboard");
             }
         }).catch((error)=>{
-            console.log(error)
+            console.log(error);
             setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
         });
 
     };
 
 
-    if (!isAuthenticated) {
-        return <div className="signup-page object-center">Loading</div>;
+    if (loading) {
+        return (<div className="signup-page object-center  flex h-screen">
+            <LoadingSpinner />
+        </div>);
     }
 
-    if (!user){
-        return <div className="signup-page object-center">Loading</div>;
+    if (!userRefreshed){
+        return (<div className="signup-page object-center  flex h-screen">
+                <LoadingSpinner />
+                </div>);
     }
 
 
