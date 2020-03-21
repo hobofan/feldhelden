@@ -8,15 +8,16 @@ import {useInput} from '../hooks/input-hook';
 const SignupPage = () => {
     const {isAuthenticated, getIdTokenClaims,user} = useAuth0();
     const [jwt, setJwt] = useState();
-    const [secrets, setSecrets, error, setError] = useState({});
+    const [secrets, setSecrets] = useState({});
+    const [error, setError] = useState('');
     const history = useHistory();
 
 
     const {value: firstName, bind: bindFirstName, reset: resetFirstName} = useInput('');
     const {value: lastName, bind: bindLastName, reset: resetLastName} = useInput('');
-    const {value: email, bind: bindEmail, reset: resetEmail} = useInput('');
+    const {value: email, bind: bindEmail, reset: resetEmail, setValue: setEmail} = useInput('');
     const {value: phone, bind: bindPhone, reset: resetPhone} = useInput('');
-    const {value: userType, bind: bindUserType, reset: resetUserType} = useInput('');
+    const {value: userType, bind: bindUserType, reset: resetUserType, setValue:setUserType} = useInput('');
 
 
     useEffect(() => {
@@ -27,10 +28,12 @@ const SignupPage = () => {
         async function fetch() {
             const newJwt = (await getIdTokenClaims()).__raw;
 
+
             if (jwt) {
                 return;
             }
             setJwt(newJwt);
+
         }
 
         fetch();
@@ -50,7 +53,6 @@ const SignupPage = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        console.log(user);
         const authOid = user.sub;
         const userDetails = {
             firstName:firstName,
@@ -69,7 +71,7 @@ const SignupPage = () => {
 
         }).catch((test)=>{
 
-            setError("Registratierung fehlgeschlagen bitte probiere es nochmal");
+            setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
 
         });
 
@@ -80,9 +82,19 @@ const SignupPage = () => {
         return <div>Loading</div>;
     }
 
+    if (!user){
+        return <div>Loading</div>;
+    }
     return (
         <div className="signup-page object-center">
+
             <form className="max-w-lg object-center" onSubmit={handleSubmit}>
+
+                {error && <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3 bg-red-200 rounded  py-3 px-4">
+                        {error}
+                    </div>
+                </div>}
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -93,7 +105,6 @@ const SignupPage = () => {
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="first-name" type="text" placeholder="Sabine"
                             {...bindFirstName}
-
                         />
                     </div>
                     <div className="w-full md:w-1/2 px-3">
@@ -118,7 +129,7 @@ const SignupPage = () => {
                         <input
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="email" type="email" placeholder="sabine.pietsch@company.de"
-                            value="test@test.de"  {...bindEmail}/>
+                            {...bindEmail}/>
                         <p className="text-gray-600 text-xs italic">Bitte gebe eine valide Email Addresse ein</p>
                     </div>
                 </div>
