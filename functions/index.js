@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 
-const handleApiRequest = async () => {
+const makeGQLClient = () => {
   const endpoint = 'https://graphql.fauna.com/graphql'
   const token = FAUNADB_SECRET; // Via `wranger secret`
 
@@ -8,7 +8,28 @@ const handleApiRequest = async () => {
     headers: {
       authorization: `Bearer ${token}`,
     },
-  })
+  });
+
+  return graphQLClient;
+}
+
+const handleApiRequest = async (request) => {
+  const url = new URL(request.url);
+  const routeUrl = url.pathname;
+
+  if (routeUrl.startsWith('/api/secrets')) {
+    return {
+      secrets: 'my preciousssss',
+      jwt: request.jwt,
+    };
+  } else {
+    return await handleFetchViewer();
+  }
+
+};
+
+const handleFetchViewer = async () => {
+  const graphQLClient = makeGQLClient();
 
   const query = /* GraphQL */ `
     {
@@ -23,6 +44,6 @@ const handleApiRequest = async () => {
   const data = await graphQLClient.request(query)
 
   return data;
-};
+}
 
 export {handleApiRequest};

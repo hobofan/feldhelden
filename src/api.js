@@ -7,6 +7,10 @@ const getApiBase = () => {
   return apiBase;
 }
 
+const authHeader = (jwt) => {
+  return `Bearer ${jwt}`;
+}
+
 const fetchViewer = async () => {
   const apiBase = getApiBase();
 
@@ -15,4 +19,16 @@ const fetchViewer = async () => {
     .then(res => res.viewer);
 }
 
-export { fetchViewer };
+const fetchSecrets = async (jwt) => {
+  const apiBase = getApiBase();
+
+  return await fetch(`${apiBase}api/secrets`, {
+    headers: {
+      Authorization: authHeader(jwt),
+    }
+  })
+    .then(res => res.json())
+    .then(res => res);
+}
+
+export { fetchViewer, fetchSecrets };

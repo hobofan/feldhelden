@@ -10,7 +10,7 @@ const IndexPage = () => {
     api.fetchViewer().then((viewer) => {
       setViewer(viewer);
     });
-  });
+  }, []);
 
   return (
     <div className="App">

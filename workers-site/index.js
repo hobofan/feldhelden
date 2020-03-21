@@ -1,6 +1,8 @@
 import { getAssetFromKV, mapRequestToAsset } from '@cloudflare/kv-asset-handler'
 
 import { handleApiRequest } from '../functions';
+import { isValidJwt, getJwt, decodeJwt } from './jwt';
+const util = require('util');
 const Router = require('./router');
 
 /**
@@ -27,10 +29,52 @@ addEventListener('fetch', event => {
   }
 })
 
+function handleOptions(request) {
+    const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
+    'Access-Control-Allow-Headers': '*',
+  };
+  // Make sure the necesssary headers are present
+  // for this to be a valid pre-flight request
+  if (
+    request.headers.get('Origin') !== null &&
+    request.headers.get('Access-Control-Request-Method') !== null &&
+    request.headers.get('Access-Control-Request-Headers') !== null
+  ) {
+    // Handle CORS pre-flight request.
+    // If you want to check the requested method + headers
+    // you can do that here.
+    return new Response(null, {
+      headers: corsHeaders,
+    })
+  } else {
+    // Handle standard OPTIONS request.
+    // If you want to allow other HTTP Methods, you can do that here.
+    return new Response(null, {
+      headers: {
+        Allow: 'GET, HEAD, POST, OPTIONS',
+      },
+    })
+  }
+}
+
 async function handleEvent(event) {
   const router = new Router();
 
+  router.options(".*", () => {
+    return handleOptions(event.request);
+  })
   router.get("/api/.*", async () => {
+
+    let decodedJwt = null;
+    if (isValidJwt(event.request)) {
+      decodedJwt = decodeJwt(getJwt(event.request));
+    }
+
+    event.request.jwt = decodedJwt;
+    console.log(decodedJwt);
+
     const handleRes = await handleApiRequest(event.request);
     return new Response(
       JSON.stringify(handleRes),
