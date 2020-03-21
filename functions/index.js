@@ -13,6 +13,28 @@ const makeGQLClient = () => {
   return graphQLClient;
 }
 
+const makeAlgoliaIndex = () => {
+  const applicationId = '2H0T9G39WY';
+  const indexingKey = ALGOLIA_INDEXING_KEY;
+  const indexName = 'feldhelden';
+
+  const index = {
+    saveObject: async (object) => {
+      const url = `https://${applicationId}.algolia.net/1/indexes/${indexName}/${object.objectID}`;
+      await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(object),
+        headers: {
+          'X-Algolia-API-Key': indexingKey,
+          'X-Algolia-Application-Id': applicationId,
+        },
+      });
+    }
+  }
+
+  return index;
+}
+
 const handleApiRequest = async (request) => {
   const url = new URL(request.url);
   const routeUrl = url.pathname;
@@ -135,7 +157,7 @@ const handleListJobPostings = async (request) => {
 
   const query = `
      query jobs {
-      jobs{   
+      jobs{
         data {
         _id
         description
@@ -170,6 +192,7 @@ const handleListJobPostings = async (request) => {
 
 const handleCreateFarmerJobPostings = async (request) => {
   const graphQLClient = makeGQLClient();
+  const algoliaIndex = makeAlgoliaIndex();
   if (!request.jwt) {
     return null;
   }
@@ -195,6 +218,17 @@ const handleCreateFarmerJobPostings = async (request) => {
   };
 
   const data = await graphQLClient.request(query, variables);
+  const jobPostingId = data.createJobPosting._id;
+
+  const algoliaObject = {
+    objectID: jobPostingId,
+    fullObject: jobPosting,
+    _geoloc: {
+      lat: jobPosting.jobContact.create.lat,
+      lng: jobPosting.jobContact.create.lon,
+    }
+  };
+  await algoliaIndex.saveObject(algoliaObject);
   return data
 };
 
