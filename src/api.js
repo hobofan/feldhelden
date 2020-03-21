@@ -83,6 +83,22 @@ const postUserDetails = async  (jwt,userDetails) => {
       .then(res => res);
 }
 
+const postJobPosting = async  (jwt,content) => {
+  const apiBase = getApiBase();
+
+  return await fetch(`${apiBase}api/me/farmer/createjobposting`, {
+    method: 'POST',
+    headers: {
+      Authorization: authHeader(jwt),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(content)
+  })
+      .then(res => res.json())
+      .then(res => res);
+}
+
 export {
   fetchViewer,
   fetchSecrets,
@@ -91,4 +107,5 @@ export {
   getUrlBase,
   getUrlBaseRedirects,
   postUserDetails,
+  postJobPosting,
 };

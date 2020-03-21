@@ -28,11 +28,27 @@ const handleApiRequest = async (request) => {
     return await handleSignUpPost(request);
   } else if (routeUrl.startsWith('/api/me/farmer/jobpostings')) {
     return await handleListFarmerJobPostings(request);
+  } else if (routeUrl.startsWith('/api/me/farmer/createjobposting')) {
+    return await handleCreateFarmerJobPostings(request);
   } else {
-    return await handleFetchViewer();
+    return null;
   }
-
 };
+
+const getFaunaUserIdFromJwt = async (jwt) => {
+  const graphQLClient = makeGQLClient();
+  const auth0UserId = jwt.payload.sub;
+  const query = /* GraphQL */ `
+    {
+      currentUser(auth0Id: "${auth0UserId}") {
+        _id
+      }
+    }
+  `;
+
+  const data = await graphQLClient.request(query);
+  return data.currentUser._id;
+}
 
 const handleCurrentUser = async (request) => {
   const graphQLClient = makeGQLClient();
@@ -107,5 +123,35 @@ const handleListFarmerJobPostings = async (request) => {
   const data = await graphQLClient.request(query, variables);
   return data
 }
+
+const handleCreateFarmerJobPostings = async (request) => {
+  const graphQLClient = makeGQLClient();
+  if (!request.jwt) {
+    return null;
+  }
+  const bodyText = await request.text();
+  const body =  JSON.parse(bodyText);
+  const userId = await getFaunaUserIdFromJwt(request.jwt);
+
+  const query = `
+    mutation CreateJobPosting($data: JobPostingInput!){
+      createJobPosting(data: $data) {
+        _id
+      }
+    }
+  `;
+
+  const {jobPosting, jobContact, jobDetails} = body;
+  jobPosting.jobOwner = { connect: userId };
+  jobPosting.jobContact = { create: jobContact };
+  jobPosting.jobDetails = { create: jobDetails };
+
+  const variables = {
+    data: jobPosting,
+  };
+
+  const data = await graphQLClient.request(query, variables);
+  return data
+};
 
 export {handleApiRequest};

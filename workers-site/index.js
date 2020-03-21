@@ -68,6 +68,7 @@ async function handleEvent(event) {
     return handleOptions(event.request);
   })
   const handleApi = async () => {
+    try {
     let decodedJwt = null;
     if (await isValidJwt(event.request)) {
       decodedJwt = decodeJwt(getJwt(event.request));
@@ -92,6 +93,14 @@ async function handleEvent(event) {
         }
       }
     );
+    } catch (e) {
+      return new Response(JSON.stringify(e, Object.getOwnPropertyNames(e)), { status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
+        }
+      })
+    }
   };
   router.get("/api/.*", handleApi);
   router.post("/api/.*", handleApi);
