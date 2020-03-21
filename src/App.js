@@ -42,7 +42,7 @@ const Header = () => {
         <li>
           {!isAuthenticated && (
             <button onClick={() => loginWithRedirect({
-              redirect_uri: `${api.getUrlBase()}signup`
+              redirect_uri: `${api.getUrlBaseRedirects()}/signup`
             })}>Log in</button>
           )}
 

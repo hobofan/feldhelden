@@ -1,3 +1,11 @@
+// Get Url base for redirects
+// Should be based on window.location, so we don't send people to live environment after login.
+const getUrlBaseRedirects = () => {
+  return window.location.origin;
+};
+
+// Get URL base for issued requests.
+// Has to point to a environment that can handle api routes (= not local dev)
 const getUrlBase = () => {
   // let apiBase = "/";
   // if (window.location.hostname === "localhost") {
@@ -53,4 +61,5 @@ export {
   fetchSecrets,
   fetchCurrentUser,
   getUrlBase,
+  getUrlBaseRedirects,
 };
