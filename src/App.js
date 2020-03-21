@@ -8,6 +8,7 @@ import {
 import Helmet from "react-helmet";
 
 import * as api from './api';
+import Header from './Header';
 import IndexPage from './pages/IndexPage';
 import OtherPage from './pages/OtherPage.js';
 import SignupPage from './pages/SignupPage.js';
@@ -27,32 +28,6 @@ const onRedirectCallback = appState => {
       : window.location.pathname
   );
 };
-
-const Header = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/other">Other</Link>
-        </li>
-        <li>
-          {!isAuthenticated && (
-            <button onClick={() => loginWithRedirect({
-              redirect_uri: `${api.getUrlBaseRedirects()}/signup`
-            })}>Log in</button>
-          )}
-
-          {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
-        </li>
-      </ul>
-    </nav>
-  );
-}
 
 const LogicWrapper = ({ children }) => {
   return (
@@ -75,7 +50,6 @@ const App = () => {
   return (
     <LogicWrapper>
       <Helmet>
-        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"/>
       </Helmet>
       <div>
         <Header/>
