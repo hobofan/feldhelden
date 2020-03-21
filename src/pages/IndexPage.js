@@ -22,8 +22,6 @@ const IndexPage = () => {
         }
     }, [isAuthenticated]);
 
-
-
     if (loading) {
         return ( <div className="signup-page flex h-screen"> <LoadingSpinner /> </div>)
 
