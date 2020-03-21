@@ -62,20 +62,24 @@ const handleCurrentUser = async (request) => {
 const handleSignUpPost= async (request) => {
   const graphQLClient = makeGQLClient();
   if (!request.jwt) {
-    return {"test":"data"};
+    return null;
   }
   const bodyText = await request.text();
   const body =  JSON.parse(bodyText);
 
   const query = /* GraphQL */ `
-    mutation {
-      createUser(data: ${body}) {
+    mutation CreateUser($data: UserInput!){
+      createUser(data: $data) {
         email
+      }
     }
-}
-`
+  `;
 
-  const data = await graphQLClient.request(query);
+  const variables = {
+    data: body,
+  };
+
+  const data = await graphQLClient.request(query, variables);
 
   return data
 };
