@@ -14,9 +14,10 @@ const Header = () => {
   let p =  (isAuthenticated && user) ? "p-2" : "p-4";
   const hiddenClass = navExpanded ? "" : "hidden";
     return (
-      <nav className={`flex items-center justify-between flex-wrap bg-green-500 ${p}`}>
+      <nav className={`flex items-center justify-between flex-wrap ${p}`}>
         <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <span className="font-semibold text-xl tracking-tight">Feldhelden</span>
+          
+          <img src="/feldhelden-logo-placeholder-v1.png" style={{maxWidth: "150px"}} />
         </div>
         <div className="block lg:hidden">
           <button

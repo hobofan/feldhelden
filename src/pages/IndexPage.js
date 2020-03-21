@@ -27,17 +27,44 @@ const IndexPage = () => {
 
     }else {
         return(
-            <div className="signup-page flex h-screen">
-                <div className="flex m-auto">
-                    <button className="bg-green-400 rounded px-2 py-2 shadow hover:bg-green-700 cursor-pointer"
-                    onClick={() => {
-                        loginWithRedirect()
-                    }}
-                    >
-                        Jetzt anmelden
-                    </button>
+            <div className="signup-page h-screen">
+                <div className="container flex">
+                    <div className="carrotImg">
+                        <img src="/felden-werner-hero-v1.png" />
+                    </div>
+                    <div className="headlineContainer">
+                        <div>
+                            <h1>Werde der Held</h1>
+                            <h1>vom <span clasName="green">Erdbeerfeld</span></h1>
+
+                        </div>
+                        <div>
+                            <div>
+                            <p>Für Jobsuchende</p>
+                                <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer"
+                                onClick={() => {
+                                    loginWithRedirect()
+                                }}
+                                >
+                                    Jetzt anmelden
+                                </button>
+                            </div>
+                            <div>
+                                <p>Für Landwirte</p>
+                                <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer"
+                                onClick={() => {
+                                    loginWithRedirect()
+                                }}
+                                >
+                                    Jobs kostenlos eintragen
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
+        
         )
 
     }
