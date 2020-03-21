@@ -26,7 +26,7 @@ const handleApiRequest = async (request) => {
 
     return await handleCurrentUser(request);
   } else if (routeUrl.startsWith('/api/signup')) {
-    return await handleSignUpPost();
+    return await handleSignUpPost(request);
   } else {
     return await handleFetchViewer();
   }
@@ -59,16 +59,25 @@ const handleCurrentUser = async (request) => {
   return data;
 }
 
-const handleSignUpPost= async () => {
+const handleSignUpPost= async (request) => {
   const graphQLClient = makeGQLClient();
-
   if (!request.jwt) {
     return null;
   }
+  const bodyText = await request.text();
+  const body =  JSON.parse(bodyText);
 
-  const auth0UserId = request.jwt.payload.sub;
+  const query = /* GraphQL */ `
+    mutation {
+      createUser(data: ${body}) {
+        email
+    }
+}
+`;
 
-  return {"user":"test"}
+  const data = await graphQLClient.request(query);
+
+  return data
 };
 
 export {handleApiRequest};

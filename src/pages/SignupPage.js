@@ -57,6 +57,7 @@ const SignupPage = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
+        setError(undefined)
         const authOid = user.sub;
         const userDetails = {
             firstName:firstName,
@@ -64,19 +65,15 @@ const SignupPage = () => {
             email:email,
             phone:phone,
             auth0Id: authOid,
-            userType: userType
+            userType: 'HELPER'
         }
 
         console.log(userDetails);
 
         api.postUserDetails(jwt,userDetails).then((responseData)=> {
-
             alert("Succesfully registered");
-
         }).catch((test)=>{
-
             setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
-
         });
 
     };
