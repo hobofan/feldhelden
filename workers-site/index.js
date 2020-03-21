@@ -1,4 +1,4 @@
-import { getAssetFromKV, mapRequestToAsset } from '@cloudflare/kv-asset-handler'
+import { getAssetFromKV, mapRequestToAsset, serveSinglePageApp } from '@cloudflare/kv-asset-handler'
 
 import { handleApiRequest } from '../functions';
 import { isValidJwt, getJwt, decodeJwt } from './jwt';
@@ -101,6 +101,7 @@ async function handleEvent(event) {
      * by configuring the function `mapRequestToAsset`
      */
     // options.mapRequestToAsset = handlePrefix(/^\/docs/)
+    options.mapRequestToAsset = serveSinglePageApp;
 
     try {
       if (DEBUG) {
