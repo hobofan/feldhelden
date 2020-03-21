@@ -68,7 +68,7 @@ async function handleEvent(event) {
   router.get("/api/.*", async () => {
 
     let decodedJwt = null;
-    if (isValidJwt(event.request)) {
+    if (await isValidJwt(event.request)) {
       decodedJwt = decodeJwt(getJwt(event.request));
     }
 
