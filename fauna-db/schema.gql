@@ -27,6 +27,7 @@ enum USER_TYPE {
 }
 
 type User {
+    auth0Id: String!
     userType: USER_TYPE!
     firstName: String!
     lastName: String!
@@ -50,5 +51,6 @@ type JobApplication {
 
 type Query {
    viewer: User
+   currentUser(auth0Id: String!): User @index(name: "userByAuth0Id")
    jobs: [JobPosting]
 }

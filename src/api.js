@@ -1,10 +1,14 @@
-const getApiBase = () => {
+const getUrlBase = () => {
   let apiBase = "/";
   if (window.location.hostname === "localhost") {
     apiBase = "https://feldhelden.org/";
   }
 
   return apiBase;
+}
+
+const getApiBase = () => {
+  return getUrlBase();
 }
 
 const authHeader = (jwt) => {
@@ -31,4 +35,4 @@ const fetchSecrets = async (jwt) => {
     .then(res => res);
 }
 
-export { fetchViewer, fetchSecrets };
+export { fetchViewer, fetchSecrets, getUrlBase };

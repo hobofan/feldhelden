@@ -76,10 +76,15 @@ async function handleEvent(event) {
     console.log(decodedJwt);
 
     const handleRes = await handleApiRequest(event.request);
+    let status = 200;
+    if (!handleRes) {
+      status = 400;
+    }
+
     return new Response(
       JSON.stringify(handleRes),
       {
-        status: 200,
+        status,
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',

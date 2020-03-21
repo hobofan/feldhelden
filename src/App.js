@@ -10,6 +10,7 @@ import Helmet from "react-helmet";
 import * as api from './api';
 import IndexPage from './pages/IndexPage';
 import OtherPage from './pages/OtherPage.js';
+import SignupPage from './pages/SignupPage.js';
 import { useAuth0, Auth0Provider } from "./react-auth0-spa";
 import authConfig from "./auth_config.json";
 import history from "./utils/history";
@@ -39,7 +40,9 @@ const Header = () => {
         </li>
         <li>
           {!isAuthenticated && (
-            <button onClick={() => loginWithRedirect({})}>Log in</button>
+            <button onClick={() => loginWithRedirect({
+              redirect_uri: `${api.getUrlBase()}signup`
+            })}>Log in</button>
           )}
 
           {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
@@ -76,6 +79,9 @@ const App = () => {
         <Switch>
           <PrivateRoute path="/other">
             <OtherPage />
+          </PrivateRoute>
+          <PrivateRoute path="/signup">
+            <SignupPage />
           </PrivateRoute>
           <Route path="/">
             <IndexPage />
