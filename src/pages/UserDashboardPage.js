@@ -44,11 +44,11 @@ const UserDashboardPage = () => {
   }, [isAuthenticated, jwt]);
   console.log(jobs)
   return (
-    <div className="signup-page">
-      <h1 className="text-2xl">Offene Jobs für Feldenhelden</h1>
+    <div className="">
+      <h1 className="text-2xl my-10">Offene Jobs für Feldenhelden</h1>
       <div className="flex flex-wrap flex-row">
         {jobs && jobs.map(job=>{
-          return (<JobsCard {...job} key={job.id}/>)
+          return (<JobsCard {...job} key={job._id}/>)
         })
         }
       </div>

@@ -42,6 +42,7 @@ enum APPLICATION_STATUS {
 type JobApplication {
     jobPosting: JobPosting!
     position: String!
+    info: String!
     applicant: User!
 }
 

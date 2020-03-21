@@ -249,8 +249,6 @@ const handleCreateJobApplication = async (request) => {
     }
   `;
 
-  return body;
-
   const {jobApplication , jobPosting} = body;
 
   jobApplication.jobPosting = { connect: jobPosting._id };
