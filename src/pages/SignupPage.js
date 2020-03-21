@@ -3,7 +3,7 @@ import {useHistory} from "react-router-dom";
 
 import * as api from '../api';
 import {useAuth0} from "../react-auth0-spa";
-import { useInput } from './hooks/input-hook';
+import { useInput } from '../hooks/input-hook';
 
 const SignupPage = () => {
     const {isAuthenticated, getIdTokenClaims} = useAuth0();
@@ -58,6 +58,7 @@ const SignupPage = () => {
 
     return (
         <div className="signup-page object-center">
+            asdfasfas
             <form className="max-w-lg object-center" onSubmit={handleSubmit}>
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -67,7 +68,10 @@ const SignupPage = () => {
                         </label>
                         <input
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="first-name" type="text" placeholder="Sabine"/>
+                            id="first-name" type="text" placeholder="Sabine"
+                            {...bindFirstName}
+
+                        />
                     </div>
                     <div className="w-full md:w-1/2 px-3">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -76,7 +80,9 @@ const SignupPage = () => {
                         </label>
                         <input
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="last-name" type="text" placeholder="Pietsch"/>
+                            id="last-name" type="text" placeholder="Pietsch"
+                            {...bindLastName}
+                        />
                     </div>
                 </div>
 
