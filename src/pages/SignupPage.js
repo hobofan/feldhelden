@@ -73,13 +73,13 @@ const SignupPage = () => {
         }
 
         api.postUserDetails(jwt,userDetails).then((responseData)=> {
-            console.log(userDetails);
             if (userDetails.userType === "FARMER") {
                 history.replace("/farmerdashboard");
             } else {
                 history.replace("/userdashboard");
             }
-        }).catch((test)=>{
+        }).catch((error)=>{
+            console.log(error)
             setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
         });
 
