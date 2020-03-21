@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
+import {useInput} from '../hooks/input-hook';
 
 const FarmerDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
@@ -34,12 +35,12 @@ const FarmerDashboardPage = () => {
 
   return (
     <div className="signup-page">
-      <ShowOrCreateJobPosting jobPostings={jobPostings} />
+      <ShowOrCreateJobPosting jobPostings={jobPostings} jwt={jwt} />
     </div>
   );
 };
 
-const ShowOrCreateJobPosting = ({ jobPostings }) => {
+const ShowOrCreateJobPosting = ({ jobPostings, jwt }) => {
   const hasJobPosting = jobPostings.length > 0;
 
   if (hasJobPosting) {
@@ -47,20 +48,65 @@ const ShowOrCreateJobPosting = ({ jobPostings }) => {
 
     return (
       <div>
-        Deine bereits erstellter Ausstellung: {jobPosting.title}
+        <JobPosting jobPosting={jobPosting} />
       </div>
     );
   } else {
     return (
       <div>
-        Lege einen neuen job an!
+        <CreateJobPostingForm jwt={jwt} />
       </div>
     )
   }
 }
 
-const CreateJobPostingForm = ({ jwt }) => {
+const JobPosting = ({ jobPosting }) => {
+  return (
+    <div>
+      Deine bereits erstellter Ausscheibung: {jobPosting.title}
+    </div>
+  );
+}
 
+const CreateJobPostingForm = ({ jwt }) => {
+  const [error, setError] = useState('');
+  const {value: firstName, bind: bindFirstName} = useInput('');
+
+  const handleSubmit = (evt) => {
+      evt.preventDefault();
+      setError(undefined);
+      const content = {
+        jobPosting: {
+          title: "Some new job", // TODO
+          description: "Some description", // TODO
+        },
+        jobContact: {
+          lat: 1, //TODO
+          lon: 1, // TODO
+          street: "Eine Strasse", // TODO
+          streetNumber: "1", // TODO
+          zipCode: "12435", // TODO
+          city: "Nicht Berlin", // TODO
+        },
+        jobDetails: [{
+          positionNeeded: "Jäger", // TODO
+          amountNeeded: 100, // TODO
+        }],
+      }
+
+      api.postJobPosting(jwt,content).then((responseData)=> {
+          console.log("Job posting erstellt");
+      }).catch((test)=>{
+          setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
+      });
+
+  };
+
+  return (
+    <div>
+      <button onClick={handleSubmit}>Erstellen</button>
+    </div>
+  )
 }
 
 export default FarmerDashboardPage;
