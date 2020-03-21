@@ -11,7 +11,6 @@ const Header = () => {
 
   const [navExpanded, setNavExpanded] = useState(false);
 
-  console.log(user);
   let p =  (isAuthenticated && user) ? "p-2" : "p-4";
   const hiddenClass = navExpanded ? "" : "hidden";
     return (

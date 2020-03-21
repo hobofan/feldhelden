@@ -8,6 +8,8 @@ const UserDashboardPage = () => {
   const [jwt, setJwt] = useState();
   const [secrets, setSecrets] = useState({});
 
+  const [jobs, setJobs] = useState([])
+
   useEffect(() => {
     if (!isAuthenticated || jwt) {
       return;
@@ -29,13 +31,20 @@ const UserDashboardPage = () => {
     api.fetchSecrets(jwt).then(setSecrets);
   }, [jwt]);
 
-  console.log('secrets', secrets);
+  useEffect(() => {
+    if (!jwt) {
+      return;
+    }
+    api.listJobPostings(jwt).then(
+        setJobs
+    );
+  }, [isAuthenticated, jwt]);
+
 
   return (
     <div className="signup-page">
-      <p>
-        Dieser User hat bereits einen Account
-      </p>
+      <h4>Offene Jobs für Feldenhelden</h4>
+      {JSON.stringify(jobs)}
     </div>
   );
 };

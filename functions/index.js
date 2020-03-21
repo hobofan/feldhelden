@@ -28,6 +28,8 @@ const handleApiRequest = async (request) => {
     return await handleSignUpPost(request);
   } else if (routeUrl.startsWith('/api/me/farmer/jobpostings')) {
     return await handleListFarmerJobPostings(request);
+  } else if (routeUrl.startsWith('/api/jobpostings')){
+    return await handleListJobPostings(request)
   } else if (routeUrl.startsWith('/api/me/farmer/createjobposting')) {
     return await handleCreateFarmerJobPostings(request);
   } else {
@@ -119,10 +121,44 @@ const handleListFarmerJobPostings = async (request) => {
     }
   `
   const variables = { auth0Id: auth0UserId };
-
   const data = await graphQLClient.request(query, variables);
   return data
 }
+
+const handleListJobPostings = async (request) => {
+  const graphQLClient = makeGQLClient();
+  if (!request.jwt) {
+    return null;
+  }
+
+  const query = `
+     query jobs {
+      jobs{
+        data {
+        description
+        title
+        jobContact {
+             lat
+             lon
+             street
+             streetNumber
+             zipCode
+             city 
+        }
+        jobOwner {
+            firstName
+            lastName
+            email
+        }
+      }
+    }
+   }
+  `
+
+  const data = await graphQLClient.request(query);
+  return data
+}
+
 
 const handleCreateFarmerJobPostings = async (request) => {
   const graphQLClient = makeGQLClient();
