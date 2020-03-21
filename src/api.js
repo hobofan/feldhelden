@@ -113,7 +113,7 @@ const postJobPosting = async  (jwt,content) => {
 const postJobApplication = async  (jwt,content) => {
   const apiBase = getApiBase();
 
-  return await fetch(`${apiBase}pi/me/helper/jobapplication`, {
+  return await fetch(`${apiBase}api/me/helper/jobapplication`, {
     method: 'POST',
     headers: {
       Authorization: authHeader(jwt),
