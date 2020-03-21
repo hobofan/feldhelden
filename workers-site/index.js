@@ -29,9 +29,11 @@ addEventListener('fetch', event => {
   }
 })
 
+
+
 function handleOptions(request) {
     const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'http://localhost:3000',
     'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
     'Access-Control-Allow-Headers': '*',
   };
@@ -86,7 +88,7 @@ async function handleEvent(event) {
         status,
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
         }
       }
     );

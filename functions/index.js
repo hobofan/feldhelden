@@ -62,7 +62,7 @@ const handleCurrentUser = async (request) => {
 const handleSignUpPost= async (request) => {
   const graphQLClient = makeGQLClient();
   if (!request.jwt) {
-    return null;
+    return {"test":"data"};
   }
   const bodyText = await request.text();
   const body =  JSON.parse(bodyText);
@@ -73,7 +73,7 @@ const handleSignUpPost= async (request) => {
         email
     }
 }
-`;
+`
 
   const data = await graphQLClient.request(query);
 
