@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
+import {JobsCard} from "../components/JobCard";
 
 const UserDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
@@ -36,15 +37,21 @@ const UserDashboardPage = () => {
       return;
     }
     api.listJobPostings(jwt).then(
-        setJobs
+        jobsResponse => {
+          setJobs(jobsResponse.jobs.data)
+        }
     );
   }, [isAuthenticated, jwt]);
-
-
+  console.log(jobs)
   return (
     <div className="signup-page">
       <h4>Offene Jobs für Feldenhelden</h4>
-      {JSON.stringify(jobs)}
+      <div className="flex">
+        {jobs && jobs.map(job=>{
+          return (<JobsCard {...job} />)
+        })
+        }
+      </div>
     </div>
   );
 };

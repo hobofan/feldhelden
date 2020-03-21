@@ -134,10 +134,13 @@ const handleListJobPostings = async (request) => {
   const query = `
      query jobs {
       jobs{
+       
         data {
+        _id
         description
         title
         jobContact {
+              _id
              lat
              lon
              street
@@ -149,6 +152,13 @@ const handleListJobPostings = async (request) => {
             firstName
             lastName
             email
+        }
+        jobDetails {
+          data{
+            _id
+            amountNeeded
+            positionNeeded
+          }
         }
       }
     }
