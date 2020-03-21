@@ -40,7 +40,7 @@ const handleCurrentUser = async (request) => {
 
   const query = /* GraphQL */ `
     {
-      currentUser(auth0Id: ${auth0UserId}) {
+      currentUser(auth0Id: "${auth0UserId}") {
         _id
         userType
         firstName

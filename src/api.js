@@ -36,4 +36,21 @@ const fetchSecrets = async (jwt) => {
     .then(res => res);
 }
 
-export { fetchViewer, fetchSecrets, getUrlBase };
+const fetchCurrentUser = async (jwt) => {
+  const apiBase = getApiBase();
+
+  return await fetch(`${apiBase}api/currentuser`, {
+    headers: {
+      Authorization: authHeader(jwt),
+    }
+  })
+    .then(res => res.json())
+    .then(res => res);
+}
+
+export {
+  fetchViewer,
+  fetchSecrets,
+  fetchCurrentUser,
+  getUrlBase,
+};

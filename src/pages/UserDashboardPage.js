@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from "react-router-dom";
 
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
 
-const SignupPage = () => {
+const UserDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [jwt, setJwt] = useState();
   const [secrets, setSecrets] = useState({});
-  const history = useHistory();
 
   useEffect(() => {
     if (!isAuthenticated || jwt) {
@@ -28,20 +26,18 @@ const SignupPage = () => {
     if (!jwt) {
       return;
     }
-    api.fetchCurrentUser(jwt).then((currentUser) => {
-      if (currentUser?.currentUser?._id) {
-        history.replace("/userdashboard");
-      }
-    });
+    api.fetchSecrets(jwt).then(setSecrets);
   }, [jwt]);
+
+  console.log('secrets', secrets);
 
   return (
     <div className="signup-page">
       <p>
-        Dieser User muss sein Profil noch anlegen
+        Dieser User hat bereits einen Account
       </p>
     </div>
   );
 };
 
-export default SignupPage;
+export default UserDashboardPage;
