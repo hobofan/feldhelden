@@ -133,8 +133,7 @@ const handleListJobPostings = async (request) => {
 
   const query = `
      query jobs {
-      jobs{
-       
+      jobs{   
         data {
         _id
         description
