@@ -33,23 +33,23 @@ const Header = () => {
           </button>
         </div>
         <div className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${hiddenClass}`}>
-          <div className="text-sm lg:flex-grow">
-              <Link to="/" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+          <div className="text-sm lg:flex-grow" style={{textAlign: "right", marginRight: "40px"}}>
+              <Link to="/" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brownhover:text-white mr-4">
                   Meine Feldhelden
               </Link>
-            <Link to="/other" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+            <Link to="/other" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brown hover:text-white">
               Feldheld werden
             </Link>
           </div>
 
               {!isAuthenticated && (
-                  <button  className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+                  <button  className="inline-block text-sm px-4 py-2 leading-none border rounded text-brown border-brown hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
                            onClick={() => loginWithRedirect({
                       redirect_uri: `${api.getUrlBaseRedirects()}/signup`
                   })}>Einloggen</button>
               )}
 
-              {isAuthenticated && <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+              {isAuthenticated && <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-brown border-brown hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
                                            onClick={() => logout()}>Ausloggen</button>}
               {isAuthenticated && user &&  <img className="inline-block leading-none h-16 sm:h-16 rounded-full ml-2" src={user.picture}/>}
 

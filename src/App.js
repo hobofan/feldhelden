@@ -53,7 +53,7 @@ const App = () => {
       </Helmet>
       <div>
         <Header/>
-        <div className="container mx-auto">
+        <div>
           <Switch>
             <PrivateRoute path="/other">
               <OtherPage/>
