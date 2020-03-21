@@ -35,6 +35,10 @@ const SignupPage = () => {
     });
   }, [jwt]);
 
+  if (!isAuthenticated) {
+    return <div></div>;
+  }
+
   return (
     <div className="signup-page">
       <p>
