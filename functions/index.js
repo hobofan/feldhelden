@@ -220,7 +220,7 @@ const handleCreateJobApplication = async (request) => {
   const {jobApplication , jobPosting} = body;
 
   jobApplication.jobPosting = { connect: jobPosting._id };
-  jobApplication.applicant = { create: userId };
+  jobApplication.applicant = { connect: userId };
 
   const variables = {
     data: jobApplication,

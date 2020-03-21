@@ -58,7 +58,7 @@ export const JobsCard = (props) => {
         const requestData = {
             jobApplication: {
                 position: "test",
-                info:info
+                info: info
             },
             jobPosting: {
                 _id: props._id
@@ -66,6 +66,7 @@ export const JobsCard = (props) => {
         }
 
         api.postJobApplication(jwt,requestData).then((responseData)=> {
+            console.log(responseData);
             alert("success")
         }).catch((error)=>{
             console.log(error);
