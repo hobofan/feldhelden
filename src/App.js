@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Helmet from "react-helmet";
 
 import * as api from './api';
 import IndexPage from './pages/IndexPage';
@@ -48,8 +49,7 @@ const Header = () => {
   );
 }
 
-
-const App = () => {
+const LogicWrapper = ({ children }) => {
   return (
     <Auth0Provider
       domain={authConfig.domain}
@@ -57,7 +57,20 @@ const App = () => {
       redirect_uri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
     >
-    <Router>
+      <Router>
+        {children}
+      </Router>
+    </Auth0Provider>
+  );
+};
+
+
+const App = () => {
+  return (
+    <LogicWrapper>
+      <Helmet>
+        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"/>
+      </Helmet>
       <div>
         <Header/>
         <Switch>
@@ -69,8 +82,7 @@ const App = () => {
           </Route>
         </Switch>
       </div>
-    </Router>
-    </Auth0Provider>
+    </LogicWrapper>
   );
 };
 
