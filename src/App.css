@@ -37,6 +37,50 @@
   }
 }
 
+p, a {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Bitter', serif;
+  font-weight: 800;
+  color: #5E3926;
+}
+
+.green {
+  color: #55822D !important;
+}
+
+.signup-page {
+  background: url('/farm-settingv2.png');
+  background-size: cover;
+}
+
+.signup-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 12%;
+}
+
+.carrotImg {
+  flex: 0.2;
+}
+
+.headlineContainer {
+  flex: 0.8;
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  padding-left: 8%;
+}
+
+.headlineContainer h1 {
+  font-size: 48px;
+}
+
+nav {
+  margin-bottom: -90px;
+}
 
 .lds-heart {
   display: inline-block;
