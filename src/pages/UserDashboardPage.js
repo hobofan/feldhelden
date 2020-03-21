@@ -38,17 +38,17 @@ const UserDashboardPage = () => {
     }
     api.listJobPostings(jwt).then(
         jobsResponse => {
-          setJobs(jobsResponse.jobs.data)
+          jobsResponse.jobs && setJobs(jobsResponse.jobs.data)
         }
     );
   }, [isAuthenticated, jwt]);
   console.log(jobs)
   return (
     <div className="signup-page">
-      <h4>Offene Jobs für Feldenhelden</h4>
-      <div className="flex">
+      <h1 className="text-2xl">Offene Jobs für Feldenhelden</h1>
+      <div className="flex flex-wrap flex-row">
         {jobs && jobs.map(job=>{
-          return (<JobsCard {...job} />)
+          return (<JobsCard {...job} key={job.id}/>)
         })
         }
       </div>
