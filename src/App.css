@@ -69,13 +69,13 @@ h1, h2, h3, h4 {
 
 
 nav {
-  margin-bottom: -90px;
 }
 
 
 .home-page {
   background: url('/farm-settingv2.png');
   background-size: cover;
+  margin-top: -90px;
 }
 
 .home-page .container {
