@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Helmet from "react-helmet";
+import LocationPicker from 'react-location-picker';
 
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
@@ -106,10 +108,16 @@ const JobDetailForm = ({ key , jobDetail, onChangeJobDetail }) => {
 };
 
 const CreateJobPostingForm = ({ jwt }) => {
+  const defaultPosition = {
+    lat: 51.10,
+    lng: 10.20,
+  };
   const emptyJobDetail = { positionNeeded: '', amountNeeded: 10 };
 
   const [error, setError] = useState('');
   const [jobDetails, setJobDetails] = useState([]);
+  const [mapPosition, setMapPosition] = useState(defaultPosition);
+  const [address, setAddress] = useState('');
   const {value: title, bind: bindTitle} = useInput('');
   const {value: description, bind: bindDescription} = useInput('');
 
@@ -122,12 +130,9 @@ const CreateJobPostingForm = ({ jwt }) => {
           description,
         },
         jobContact: {
-          lat: 1, //TODO
-          lon: 1, // TODO
-          street: "Eine Strasse", // TODO
-          streetNumber: "1", // TODO
-          zipCode: "12435", // TODO
-          city: "Nicht Berlin", // TODO
+          lat: mapPosition.lat,
+          lon: mapPosition.lng,
+          address, // TODO
         },
         jobDetails,
       }
@@ -150,6 +155,12 @@ const CreateJobPostingForm = ({ jwt }) => {
     newJobDetails[key] = jobDetail;
     setJobDetails(newJobDetails);
   };
+
+  const handleLocationChange = (newLocation) => {
+    setMapPosition(newLocation.position);
+    setAddress(newLocation.address);
+  }
+
 
   return (
     <div>
@@ -195,6 +206,15 @@ const CreateJobPostingForm = ({ jwt }) => {
                   Position hinzufügen
                 </button>
             </div>
+            <h3 className="text-2xl text-gray-700 my-2">Ort</h3>
+            <span>{address}</span>
+            <LocationPicker
+              containerElement={ <div style={ {height: '100%'} } /> }
+              mapElement={ <div style={ {height: '400px'} } /> }
+              defaultPosition={defaultPosition}
+              onChange={handleLocationChange}
+              zoom={5}
+            />
           </div>
 
           <div className="flex flex-wrap -mx-3 mb-6">

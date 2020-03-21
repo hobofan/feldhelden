@@ -7,10 +7,7 @@ type JobDetail {
 type JobContact {
    lat: Float!
    lon: Float!
-   street: String!
-   streetNumber: String!
-   zipCode: String!
-   city: String!
+   address: String!
 }
 
 type JobPosting {
