@@ -56,10 +56,27 @@ const fetchCurrentUser = async (jwt) => {
     .then(res => res);
 }
 
+const postUserDetails = async  (jwt,userDetails) => {
+  const apiBase = getApiBase();
+
+  return await fetch(`${apiBase}api/signup`, {
+    method: 'POST',
+    headers: {
+      Authorization: authHeader(jwt),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userDetails)
+  })
+      .then(res => res.json())
+      .then(res => res);
+}
+
 export {
   fetchViewer,
   fetchSecrets,
   fetchCurrentUser,
   getUrlBase,
   getUrlBaseRedirects,
+  postUserDetails,
 };
