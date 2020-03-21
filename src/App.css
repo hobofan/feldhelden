@@ -37,7 +37,7 @@
   }
 }
 
-p, a {
+p, a, button {
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -51,12 +51,34 @@ h1, h2, h3, h4 {
   color: #55822D !important;
 }
 
-.signup-page {
+.text-brown {
+  color: #5E3926;
+}
+
+.border-brown {
+  border-color: #5E3926;
+}
+
+.label {
+  color: #5E3926;
+  font-family: 'Open Sans';
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+nav {
+  margin-bottom: -90px;
+}
+
+
+.home-page {
   background: url('/farm-settingv2.png');
   background-size: cover;
 }
 
-.signup-page .container {
+.home-page .container {
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 12%;
@@ -64,6 +86,24 @@ h1, h2, h3, h4 {
 
 .carrotImg {
   flex: 0.2;
+}
+
+.carrotImg img {
+  animation: flyingKarl 6s infinite;
+}
+
+@keyframes flyingKarl {
+  from {
+    transform: scale(1) translate3D(0, 0, 0) rotate(2deg);
+  }
+
+  50% {
+    transform: scale(.9) translate3D(10px, 15px, 10px) rotate(4deg);
+  }
+
+  to {
+    transform: scale(1) translate3D(0, 0, 0) rotatet(2deg);
+  }
 }
 
 .headlineContainer {
@@ -78,9 +118,22 @@ h1, h2, h3, h4 {
   font-size: 48px;
 }
 
-nav {
-  margin-bottom: -90px;
+.cta {
+  width: 300px;
+  font-size: 20px;
+  font-family: 'Bitter', serif;
+  background-color: #55822D;
+  color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  font-weight: 800;
 }
+
+.cta-light-green {
+  background-color: #82B43E;
+}
+
+
 
 .lds-heart {
   display: inline-block;

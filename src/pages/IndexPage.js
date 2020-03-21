@@ -27,7 +27,7 @@ const IndexPage = () => {
 
     }else {
         return(
-            <div className="signup-page h-screen">
+            <div className="home-page h-screen">
                 <div className="container flex">
                     <div className="carrotImg">
                         <img src="/felden-werner-hero-v1.png" />
@@ -35,23 +35,23 @@ const IndexPage = () => {
                     <div className="headlineContainer">
                         <div>
                             <h1>Werde der Held</h1>
-                            <h1>vom <span clasName="green">Erdbeerfeld</span></h1>
+                            <h1>vom <span className="green">Erdbeerfeld</span></h1>
 
                         </div>
-                        <div>
-                            <div>
-                            <p>Für Jobsuchende</p>
-                                <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer"
+                        <div className="flex" style={{marginTop: "5%"}}>
+                            <div style={{marginRight: "5%"}} >
+                            <p className="label">Für Jobsuchende</p>
+                                <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer cta"
                                 onClick={() => {
                                     loginWithRedirect()
                                 }}
                                 >
-                                    Jetzt anmelden
+                                    Jetzt Feldheld werden
                                 </button>
                             </div>
                             <div>
-                                <p>Für Landwirte</p>
-                                <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer"
+                                <p className="label">Für Landwirte</p>
+                                <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer cta cta-light-green"
                                 onClick={() => {
                                     loginWithRedirect()
                                 }}
