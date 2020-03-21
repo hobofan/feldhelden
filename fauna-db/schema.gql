@@ -33,7 +33,7 @@ type User {
     lastName: String!
     email: String!
     phone: String!
-
+    ownedJobPostings: [JobPosting] @relation
 }
 
 enum APPLICATION_STATUS {

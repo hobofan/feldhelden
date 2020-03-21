@@ -23,10 +23,11 @@ const handleApiRequest = async (request) => {
       jwt: request.jwt,
     };
   } else if (routeUrl.startsWith('/api/currentuser')) {
-
     return await handleCurrentUser(request);
   } else if (routeUrl.startsWith('/api/signup')) {
     return await handleSignUpPost(request);
+  } else if (routeUrl.startsWith('/api/me/farmer/jobpostings')) {
+    return await handleListFarmerJobPostings(request);
   } else {
     return await handleFetchViewer();
   }
@@ -67,7 +68,7 @@ const handleSignUpPost= async (request) => {
   const bodyText = await request.text();
   const body =  JSON.parse(bodyText);
 
-  const query = /* GraphQL */ `
+  const query = `
     mutation CreateUser($data: UserInput!){
       createUser(data: $data) {
         email
@@ -80,8 +81,31 @@ const handleSignUpPost= async (request) => {
   };
 
   const data = await graphQLClient.request(query, variables);
-
   return data
 };
+
+const handleListFarmerJobPostings = async (request) => {
+  const graphQLClient = makeGQLClient();
+  if (!request.jwt) {
+    return null;
+  }
+  const auth0UserId = request.jwt.payload.sub;
+
+  const query = `
+    query FarmerJobPostings($auth0Id: String!) {
+      currentUser(auth0Id: $auth0Id) {
+        ownedJobPostings {
+          data {
+            title
+          }
+        }
+      }
+    }
+  `
+  const variables = { auth0Id: auth0UserId };
+
+  const data = await graphQLClient.request(query, variables);
+  return data
+}
 
 export {handleApiRequest};

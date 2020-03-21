@@ -56,6 +56,17 @@ const fetchCurrentUser = async (jwt) => {
     .then(res => res);
 }
 
+const listFarmerJobPostings = async (jwt) => {
+  const apiBase = getApiBase();
+
+  return await fetch(`${apiBase}api/me/farmer/jobpostings`, {
+    headers: {
+      Authorization: authHeader(jwt),
+    }
+  })
+    .then(res => res.json());
+}
+
 const postUserDetails = async  (jwt,userDetails) => {
   const apiBase = getApiBase();
 
@@ -76,6 +87,7 @@ export {
   fetchViewer,
   fetchSecrets,
   fetchCurrentUser,
+  listFarmerJobPostings,
   getUrlBase,
   getUrlBaseRedirects,
   postUserDetails,

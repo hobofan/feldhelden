@@ -6,7 +6,7 @@ import { useAuth0 } from "../react-auth0-spa";
 const FarmerDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [jwt, setJwt] = useState();
-  const [secrets, setSecrets] = useState({});
+  const [jobPostings, setJobPostings] = useState([]);
 
   useEffect(() => {
     if (!isAuthenticated || jwt) {
@@ -26,18 +26,41 @@ const FarmerDashboardPage = () => {
     if (!jwt) {
       return;
     }
-    api.fetchSecrets(jwt).then(setSecrets);
+    api.listFarmerJobPostings(jwt)
+      .then((res) => setJobPostings(res.currentUser.ownedJobPostings.data));
   }, [jwt]);
 
-  console.log('secrets', secrets);
+  console.log('secrets', jobPostings);
 
   return (
     <div className="signup-page">
-      <p>
-        Dieser Farmer hat bereits einen Account
-      </p>
+      <ShowOrCreateJobPosting jobPostings={jobPostings} />
     </div>
   );
 };
+
+const ShowOrCreateJobPosting = ({ jobPostings }) => {
+  const hasJobPosting = jobPostings.length > 0;
+
+  if (hasJobPosting) {
+    const jobPosting = jobPostings[0];
+
+    return (
+      <div>
+        Deine bereits erstellter Ausstellung: {jobPosting.title}
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        Lege einen neuen job an!
+      </div>
+    )
+  }
+}
+
+const CreateJobPostingForm = ({ jwt }) => {
+
+}
 
 export default FarmerDashboardPage;
