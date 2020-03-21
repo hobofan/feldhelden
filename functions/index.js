@@ -142,10 +142,7 @@ const handleListJobPostings = async (request) => {
               _id
              lat
              lon
-             street
-             streetNumber
-             zipCode
-             city 
+             address
         }
         jobOwner {
             firstName

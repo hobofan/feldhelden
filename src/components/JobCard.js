@@ -16,18 +16,14 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const JobsCard = (props) => {
-
-
     const [modalIsOpen,setIsOpen] = useState(false)
 
     function openModal() {
         setIsOpen(true);
     }
-
     function closeModal(){
         setIsOpen(false);
     }
-
     const jobDetailFields =  props && props.jobDetails.data.map(detail => {
         return (<span
             key={detail._id}
@@ -35,8 +31,6 @@ export const JobsCard = (props) => {
             {detail.amountNeeded} {detail.positionNeeded}
         </span>)
     });
-
-
 
     return (
         <div className="w-2/6 p-2">
