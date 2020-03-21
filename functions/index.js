@@ -56,6 +56,8 @@ const handleApiRequest = async (request) => {
     return await handleCreateFarmerJobPostings(request);
   } else if (routeUrl.startsWith('/api/me/helper/jobapplication')) {
     return await handleCreateJobApplication(request);
+  } else if (routeUrl.startsWith('/api/me/helper/jobapplication/list')) {
+    return await handleListMyApplications(request);
   } else {
     return null;
   }
@@ -146,6 +148,35 @@ const handleListFarmerJobPostings = async (request) => {
   `
   const variables = { auth0Id: auth0UserId };
   const data = await graphQLClient.request(query, variables);
+  return data
+};
+
+const handleListMyApplications  = async (request) => {
+  const graphQLClient = makeGQLClient();
+  if (!request.jwt) {
+    return null;
+  }
+
+  const auth0UserId = request.jwt.payload.sub;
+
+  const query = `
+   query userJobApplications($auth0Id: String!) {
+      currentUser(auth0Id: $auth0Id) {
+        ownedJobApplications {
+          data {
+            _id
+            info
+            position
+            jobPosting{
+              title
+            }
+          }
+        }
+      }
+    }
+  `
+  const variables = { auth0Id: auth0UserId };
+  const data = await graphQLClient.request(query,variables);
   return data
 }
 

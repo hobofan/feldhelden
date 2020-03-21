@@ -31,6 +31,7 @@ type User {
     email: String!
     phone: String!
     ownedJobPostings: [JobPosting] @relation
+    ownedJobApplications: [JobApplication] @relation
 }
 
 enum APPLICATION_STATUS {

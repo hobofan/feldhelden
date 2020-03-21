@@ -42,7 +42,7 @@ const UserDashboardPage = () => {
         }
     );
   }, [isAuthenticated, jwt]);
-  console.log(jobs)
+  console.log(jobs);
   return (
     <div className="">
       <h1 className="text-2xl my-10">Offene Jobs für Feldenhelden</h1>
