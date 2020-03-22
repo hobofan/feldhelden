@@ -32,7 +32,7 @@ export const FarmerApplicationCard = (props) => {
     const handleAccept = (evt) => handle("ACCEPTED", evt);
 
     return (
-        <div className="w-1/3 p-2">
+        <div className="w-1/2 p-2">
             <div className="rounded overflow-hidden shadow-lg">
                 <div className="px-6 py-4">
                     <div className="flex justify-between flex-row">

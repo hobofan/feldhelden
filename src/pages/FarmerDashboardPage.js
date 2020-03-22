@@ -97,7 +97,7 @@ const ShowOrCreateJobPosting = ({jobPostings,jwt,reloadApplications, isLoading, 
 const JobDetailForm = ({ i, jobDetail, onChangeJobDetail }) => {
   const {value: position, bind: bindPosition} = useInput(jobDetail.positionNeeded);
   const {value: amount, bind: bindAmount} = useInput(jobDetail.amountNeeded);
-  console.log('position', position);
+
 
   useEffect(() => {
     onChangeJobDetail(i, {

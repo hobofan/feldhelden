@@ -143,7 +143,7 @@ const updateJobApplicationFarmer = async  (jwt, content) => {
       .then(res => res);
 }
 
-const listJobApplicationsHelper = async  (jwt,content) => {
+const listJobApplicationsHelper = async  (jwt) => {
   const apiBase = getApiBase();
 
   return await fetch(`${apiBase}api/me/helper/jobapplications/list`, {
