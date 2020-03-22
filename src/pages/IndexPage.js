@@ -56,7 +56,7 @@ const IndexPage = () => {
                             <p className="label">Für Jobsuchende</p>
                                 <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer cta"
                                 onClick={() => {
-                                    loginWithRedirect()
+                                    loginWithRedirect({ landhelden_login_hint: 'signUp' })
                                 }}
                                 >
                                     Jetzt Feldheld werden
@@ -66,7 +66,7 @@ const IndexPage = () => {
                                 <p className="label">Für Landwirte</p>
                                 <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer cta cta-light-green"
                                 onClick={() => {
-                                    loginWithRedirect()
+                                    loginWithRedirect({ landhelden_login_hint: 'signUp' })
                                 }}
                                 >
                                     Jobs kostenlos eintragen

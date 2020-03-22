@@ -37,9 +37,14 @@ const Header = () => {
               <Link to="/" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brownhover:text-white mr-4">
                   Meine Feldhelden
               </Link>
-            <Link to="/other" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brown hover:text-white">
+            <a
+                className="block mt-4 lg:inline-block lg:mt-0 text-right text-brown hover:text-white"
+                onClick={() => {
+                    loginWithRedirect({ landhelden_login_hint: 'signUp' })
+                }}
+            >
               Feldheld werden
-            </Link>
+            </a>
           </div>
 
               {!isAuthenticated && (
