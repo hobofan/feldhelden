@@ -161,6 +161,12 @@ const handleListFarmerJobPostings = async (request) => {
                 }
               }
             }
+            jobDetails {
+              data {
+                positionNeeded
+                amountNeeded
+              }
+            }
           }
         }
       }

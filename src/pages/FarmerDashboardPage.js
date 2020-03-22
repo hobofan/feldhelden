@@ -37,7 +37,7 @@ const FarmerDashboardPage = () => {
   console.log('secrets', jobPostings);
 
   return (
-    <div className="signup-page">
+    <div className="mx-auto">
       <ShowOrCreateJobPosting jobPostings={jobPostings} jwt={jwt} />
     </div>
   );
@@ -50,15 +50,11 @@ const ShowOrCreateJobPosting = ({ jobPostings, jwt }) => {
   if (hasJobPosting) {
     const jobPosting = jobPostings[0];
     return (
-      <div>
-        <JobPosting jobPosting={jobPosting} />
-      </div>
+      <JobPosting jobPosting={jobPosting} />
     );
   } else {
     return (
-      <div>
-        <CreateJobPostingForm jwt={jwt} />
-      </div>
+      <CreateJobPostingForm jwt={jwt} />
     )
   }
 }
@@ -66,21 +62,22 @@ const ShowOrCreateJobPosting = ({ jobPostings, jwt }) => {
 
 
 
-const JobDetailForm = ({ key , jobDetail, onChangeJobDetail }) => {
+const JobDetailForm = ({ i, jobDetail, onChangeJobDetail }) => {
   const {value: position, bind: bindPosition} = useInput(jobDetail.positionNeeded);
   const {value: amount, bind: bindAmount} = useInput(jobDetail.amountNeeded);
+  console.log('position', position);
 
   useEffect(() => {
-    onChangeJobDetail(key, {
+    onChangeJobDetail(i, {
       positionNeeded: position,
       amountNeeded: amount,
     });
   }, [position, amount]);
 
-  const positionId = `detail-${key}-position`;
-  const amountId = `detail-${key}-amount`;
+  const positionId = `detail-${i}-position`;
+  const amountId = `detail-${i}-amount`;
   return (
-    <div key={key} className="w-full px-3 mb-6 md:mb-0">
+    <div className="w-full px-3 mb-6 md:mb-0">
         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                htmlFor={amountId}>
             Anzahl
@@ -128,7 +125,7 @@ const CreateJobPostingForm = ({ jwt }) => {
         jobContact: {
           lat: mapPosition.lat,
           lon: mapPosition.lng,
-          address, // TODO
+          address,
         },
         jobDetails,
       }
@@ -149,6 +146,7 @@ const CreateJobPostingForm = ({ jwt }) => {
   const handleChangeJobDetail = (key, jobDetail) => {
     const newJobDetails = [...jobDetails];
     newJobDetails[key] = jobDetail;
+    console.log('newJobDetails', newJobDetails);
     setJobDetails(newJobDetails);
   };
 
@@ -194,7 +192,7 @@ const CreateJobPostingForm = ({ jwt }) => {
             </div>
             <h3 className="text-2xl text-gray-700 my-2">Offene Positionen</h3>
             { jobDetails.map((jobDetail, i) => (
-              <JobDetailForm key={i} jobDetail={jobDetail} onChangeJobDetail={handleChangeJobDetail}/>
+              <JobDetailForm i={i} jobDetail={jobDetail} onChangeJobDetail={handleChangeJobDetail}/>
             )) }
             <div className="w-full px-3 mb-6 md:mb-0">
                 <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 my-4 rounded" onClick={handleClickAddPosition}>
