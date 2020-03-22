@@ -9,7 +9,6 @@ import {LoadingSpinner} from "../components/Loading";
 const ApplicationDashboardPage = () => {
     const { isAuthenticated, getIdTokenClaims } = useAuth0();
     const [jwt, setJwt] = useState();
-    const [secrets, setSecrets] = useState({});
     const [dataLoaded, setDataLoaded] = useState(false);
     const [openApplications, setOpenApplications] = useState([]);
     const [declinedApplications, setDeclinedApplications] = useState([]);
@@ -26,14 +25,8 @@ const ApplicationDashboardPage = () => {
             }
             setJwt(newJwt);
         }
+        fetch();
     }, [isAuthenticated, getIdTokenClaims, setJwt, jwt]);
-
-    useEffect(() => {
-        if (!jwt) {
-            return;
-        }
-        api.fetchSecrets(jwt).then(setSecrets);
-    }, [jwt]);
 
     useEffect(() => {
         if (!jwt) {
