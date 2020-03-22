@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 1000px) {
+  .carrotImg {
+    display: none;
+  }
+}
+
+@media(max-width: 480px) {
+  .label {
+    text-align: left !important;
+    margin-top: 20px;
+  }
+}
