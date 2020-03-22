@@ -220,3 +220,7 @@ nav button:hover {
 .ais-GeoSearch, .ais-GeoSearch-map {
   height: 100%;
 }
+
+.ap-suggestion {
+  display: flex;
+}
