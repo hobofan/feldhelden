@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Helmet from "react-helmet";
+import AlgoliaPlaces from 'algolia-places-react';
 import LocationPicker from 'react-location-picker';
 
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
 import {useInput} from '../hooks/input-hook';
 import {JobPosting} from "../components/FarmerJobPostingOverview";
+
+const placesApplicationId = 'plTW2AVBFZMV';
+const placesSearchKey = '03ea77d80f7a79bdebe603f212de899e';
 
 const FarmerDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
@@ -110,6 +114,7 @@ const CreateJobPostingForm = ({ jwt }) => {
   const [error, setError] = useState('');
   const [jobDetails, setJobDetails] = useState([]);
   const [mapPosition, setMapPosition] = useState(defaultPosition);
+  const [algoliaPlaces, setAlgoliaPlaces] = useState();
   const [address, setAddress] = useState('');
   const {value: title, bind: bindTitle} = useInput('');
   const {value: description, bind: bindDescription} = useInput('');
@@ -155,6 +160,20 @@ const CreateJobPostingForm = ({ jwt }) => {
     setAddress(newLocation.address);
   }
 
+  const handleRefAlgoliaPlaces = (ref) => {
+    setAlgoliaPlaces(ref);
+  }
+
+  const handleAlgoliaPlacesChange = (e) => {
+    setAddress(e.suggestion.value);
+  }
+
+  useEffect(() => {
+    if (!algoliaPlaces) {
+      return;
+    }
+    algoliaPlaces.setVal(address);
+  }, [address])
 
   return (
     <div>
@@ -200,14 +219,26 @@ const CreateJobPostingForm = ({ jwt }) => {
                 </button>
             </div>
             <h3 className="text-2xl text-gray-700 my-2">Ort</h3>
-            <span>{address}</span>
-            <LocationPicker
-              containerElement={ <div style={ {height: '100%'} } /> }
-              mapElement={ <div style={ {height: '400px'} } /> }
-              defaultPosition={defaultPosition}
-              onChange={handleLocationChange}
-              zoom={5}
+            <div className="mb-2"><label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Ausgewählte Adresse</label><span>{address}</span></div>
+            <AlgoliaPlaces
+              placeholder='Such deine Adresse!'
+              options={{
+                appId: placesApplicationId,
+                apiKey: placesSearchKey,
+                language: 'de',
+                countries: ['de'],
+                type: 'address',
+              }}
+              placesRef={handleRefAlgoliaPlaces}
+              onChange={handleAlgoliaPlacesChange}
             />
+              <LocationPicker
+                containerElement={ <div style={ {height: '100%'} } /> }
+                mapElement={ <div style={ {height: '400px'} } /> }
+                defaultPosition={defaultPosition}
+                onChange={handleLocationChange}
+                zoom={5}
+              />
           </div>
 
           <div className="flex flex-wrap -mx-3 mb-6">
