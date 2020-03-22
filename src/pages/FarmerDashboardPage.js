@@ -36,7 +36,7 @@ const FarmerDashboardPage = () => {
   console.log('secrets', jobPostings);
 
   return (
-    <div className="signup-page">
+    <div className="mx-auto">
       <ShowOrCreateJobPosting jobPostings={jobPostings} jwt={jwt} />
     </div>
   );
@@ -49,23 +49,48 @@ const ShowOrCreateJobPosting = ({ jobPostings, jwt }) => {
     const jobPosting = jobPostings[0];
 
     return (
-      <div>
-        <JobPosting jobPosting={jobPosting} />
-      </div>
+      <JobPosting jobPosting={jobPosting} />
     );
   } else {
     return (
-      <div>
-        <CreateJobPostingForm jwt={jwt} />
-      </div>
+      <CreateJobPostingForm jwt={jwt} />
     )
   }
 }
 
 const JobPosting = ({ jobPosting }) => {
+  const jobDetailFields = jobPosting && jobPosting.jobDetails.data.map(detail => {
+      return (<span
+          key={detail._id}
+          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+          {detail.amountNeeded} {detail.positionNeeded}
+      </span>)
+  });
+
   return (
-    <div>
-      Deine bereits erstellter Ausscheibung: {jobPosting.title}
+    <div class="mx-auto w-1/2">
+      <h2>Deine Ausschreibung</h2>
+      <div>
+        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+               htmlFor="job-title">
+          Titel
+        </label>
+        <p id="job-title"className="text-gray-700 text-base my-2">
+          {jobPosting.title}
+        </p>
+        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+               htmlFor="job-description">
+          Beschreibung
+        </label>
+        <p id="job-description"className="text-gray-700 text-base my-2">
+          {jobPosting.description}
+        </p>
+        <div className="text-sm mb-2 text-gray-800">
+          <i className="fas fa-map-marked-alt my-2 mr-2"/>
+          <span>{jobPosting.jobContact.address} </span>
+        </div>
+        { jobDetailFields }
+      </div>
     </div>
   );
 }
@@ -132,7 +157,7 @@ const CreateJobPostingForm = ({ jwt }) => {
         jobContact: {
           lat: mapPosition.lat,
           lon: mapPosition.lng,
-          address, // TODO
+          address,
         },
         jobDetails,
       }
