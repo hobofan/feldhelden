@@ -40,27 +40,27 @@ const IndexPage = () => {
 
     }else {
         return(
-            <div className="home-page">
-                <div className="hero-section h-screen container flex">
-                    <div className="carrotImg">
-                        <img src="/felden-werner-hero-v1.png" />
+            <div className="home-page bg-cover negativeMargin">
+                <div className="hero-section pt-32 lg:pt-32 h-screen container flex flex-col md:flex-row">
+                    <div className="carrotImg w-full md:w-1/4 items-start">
+                        <img src="/felden-werner-hero-v1.png"/>
                     </div>
-                    <div className="headlineContainer">
+                    <div className="headlineContainer flex flex-col w-full md:flex md:w-3/4 lg:pt-8">
                         <div>
                             <h1>Werde {title}</h1>
-                            <h1>vom <span className="green">Erdbeerfeld</span></h1>
+                            <h1>vom <span className="text-color-green">Erdbeerfeld</span></h1>
 
                         </div>
-                        <div className="flex" style={{marginTop: "5%"}}>
-                            <div style={{marginRight: "5%"}} >
-                            <p className="label">Für Jobsuchende</p>
-                                <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer cta"
-                                onClick={() => {
-                                    loginWithRedirect({ landhelden_login_hint: 'signUp' })
-                                }}
-                                >
-                                    Jetzt Feldheld werden
-                                </button>
+                        <div className="md:flex mt-8">
+                            <div className="lg:mr-8">
+                                <p className="label">Für Jobsuchende</p>
+                                    <button className="bg-green-400 rounded px-2 py-2 hover:bg-green-700 cursor-pointer cta"
+                                    onClick={() => {
+                                        loginWithRedirect({ landhelden_login_hint: 'signUp' })
+                                    }}
+                                    >
+                                        Jetzt Feldheld werden
+                                    </button>
                             </div>
                             <div>
                                 <p className="label">Für Landwirte</p>
