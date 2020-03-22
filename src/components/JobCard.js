@@ -23,10 +23,10 @@ export const JobsCard = (props) => {
     const {isAuthenticated, getIdTokenClaims,user,loading} = useAuth0();
     const [modalIsOpen,setIsOpen] = useState(false);
 
-    const [jwt, setJwt] = useState();
+
     const [successModalIsOpen,setSuccessModalIsOpen] = useState(false);
     const [error, setError] = useState('');
-    const [appliedPosition, setAppliedPosition] = useState();
+    const [appliedPosition, setAppliedPosition] = useState(props.jobDetails.data[0].positionNeeded);
 
     const {value: info, bind: bindInfo} = useInput('');
 
@@ -44,18 +44,8 @@ export const JobsCard = (props) => {
         setSuccessModalIsOpen(false);
     }
 
-    useEffect(() => {
-        if (!isAuthenticated || jwt) {
-            return;
-        }
-        async function fetch() {
-            const newJwt = (await getIdTokenClaims()).__raw;
-            if (jwt) {
-                return;
-            }
-            setJwt(newJwt);
-        }
-    }, [isAuthenticated, getIdTokenClaims, setJwt, jwt]);
+    const jwt = props.jwt;
+
 
     useEffect(() => {
       const fallbackCb = () => {};
@@ -75,6 +65,7 @@ export const JobsCard = (props) => {
                 _id: props._id
             }
         };
+        console.log(requestData);
         api.postJobApplication(jwt,requestData).then((responseData)=> {
             closeModal();
             openSuccessModal()
@@ -134,6 +125,7 @@ export const JobsCard = (props) => {
                             <select
                                 value={props.jobDetails.data[0].positionNeeded}
                                 onChange={(event => {
+                                    console.log(event.target.value);
                                 setAppliedPosition(event.target.value)
                             })}>
 

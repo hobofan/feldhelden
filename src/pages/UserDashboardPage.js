@@ -70,7 +70,7 @@ const UserDashboardPage = () => {
       <div className="flex w-full">
         <div className="flex flex-wrap flex-row w-1/2">
         {jobs && jobs.map(job=>{
-          return (<JobsCard {...job} key={job._id} onRefOpenModal={handleModalOpenRef}/>)
+          return (<JobsCard {...job} jwt={jwt} key={job._id} onRefOpenModal={handleModalOpenRef}/>)
         })
         }
         </div>

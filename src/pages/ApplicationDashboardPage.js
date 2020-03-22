@@ -10,6 +10,7 @@ const ApplicationDashboardPage = () => {
     const { isAuthenticated, getIdTokenClaims } = useAuth0();
     const [jwt, setJwt] = useState();
     const [secrets, setSecrets] = useState({});
+    const [dataLoaded, setDataLoaded] = useState(false);
     const [openApplications, setOpenApplications] = useState([]);
     const [declinedApplications, setDeclinedApplications] = useState([]);
     const [acceptedApplications, setAcceptedApplications] = useState([]);
@@ -25,7 +26,6 @@ const ApplicationDashboardPage = () => {
             }
             setJwt(newJwt);
         }
-        fetch();
     }, [isAuthenticated, getIdTokenClaims, setJwt, jwt]);
 
     useEffect(() => {
@@ -50,7 +50,8 @@ const ApplicationDashboardPage = () => {
 
                     setOpenApplications(_openApplications);
                     setDeclinedApplications(_declinedApplications);
-                    setAcceptedApplications(_acceptedApplications)
+                    setAcceptedApplications(_acceptedApplications);
+                    setDataLoaded(true)
                 }
             }
         );
@@ -90,7 +91,7 @@ const ApplicationDashboardPage = () => {
             <h1 className="text-2xl ">Deine Bewerbungen auf einen Blick</h1>
             <div className="mt-5 pr-10">Finde hier einen Überblick über alle deine Bewerbungen! Bitte denke daran, dass ein Landwirt nicht alle Feldhelden aktzeptieren kann. Nachdem er deine Bewerbung bekommen und akzeptiert hat wird der Landwirt dich per Email oder Telefon kontaktieren.</div>
 
-            {openApplications.length >0 ? applicationsOverview : (
+            {!dataLoaded ? applicationsOverview : (
                 <div className="flex h-screen -mt-200">
                     <LoadingSpinner />
                 </div>

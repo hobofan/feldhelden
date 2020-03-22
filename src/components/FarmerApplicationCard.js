@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Modal from 'react-modal';
 
-export const FarmerApplicationCard = (props) => {
-
+export const FarmerApplicationCard = (props,jwt) => {
+    console.log(jwt)
     return (
         <div className="w-1/3 p-2">
             <div className="rounded overflow-hidden shadow-lg">
@@ -26,11 +26,11 @@ export const FarmerApplicationCard = (props) => {
 
                     <div className="text-sm mb-2 text-gray-800">
                         <i className="fas fa-mail-bulk my-2 mr-2"/>
-                        <span> {props.applicant.email && props.jobPosting.jobOwner.email} </span>
+                        <span> {props.applicant.email && props.applicant.email} </span>
                     </div>
                     <div className="text-sm mb-2 text-gray-800">
                         <i className="fas fa-phone-alt my-2 mr-2"/>
-                        <span> {props.applicant.phone && props.jobPosting.jobOwner.phone} </span>
+                        <span> {props.applicant.phone && props.applicant.phone} </span>
                     </div>
 
                     <div>

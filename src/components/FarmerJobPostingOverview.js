@@ -1,7 +1,7 @@
 import React from "react";
 import {FarmerApplicationCard} from "./FarmerApplicationCard";
 
-export const JobPosting = ({jobPosting}) => {
+export const JobPosting = ({jobPosting, jwt}) => {
     const jobDetailFields = jobPosting && jobPosting.jobDetails.data.map(detail => {
         return (<span
             key={detail._id}
@@ -10,13 +10,12 @@ export const JobPosting = ({jobPosting}) => {
       </span>)
     });
 
-    console.log(jobPosting);
     const openApplications = jobPosting.applicants.data.map(applicant => {
-        return <FarmerApplicationCard {...applicant} key={applicant._id}/>
+        return <FarmerApplicationCard {...applicant} jwt={jwt} key={applicant._id}/>
     })
 
     return (
-        <div class="mx-auto ml-10">
+        <div class="mx-auto ml-10 ">
             <h2>Deine Ausschreibung</h2>
             <div className="ml-10">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
