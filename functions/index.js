@@ -141,6 +141,23 @@ const handleListFarmerJobPostings = async (request) => {
         ownedJobPostings {
           data {
             title
+            description
+            jobContact {
+              lat
+              lon
+              address
+            }
+            applicants {
+              status
+              position
+              info
+              applicant {
+                firstName
+                lastName
+                email
+                phone
+              }
+            }
           }
         }
       }

@@ -117,6 +117,7 @@ async function handleEvent(event) {
       const knownRoutes = [
         "/other",
         "/signup",
+        "/impressum",
         "/userdashboard",
         "/farmerdashboard",
         "/helper/applications",
