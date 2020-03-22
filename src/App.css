@@ -85,7 +85,7 @@ nav button:hover {
 }
 
 
-.home-page {
+.home-page, .signup-page {
   background: url('/farm-settingv2.png');
   background-size: cover;
 }

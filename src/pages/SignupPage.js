@@ -91,13 +91,13 @@ const SignupPage = () => {
 
 
     if (loading) {
-        return (<div className="signup-page object-center  flex h-screen">
+        return (<div className="signup-page object-center  flex h-screen negativeMargin">
             <LoadingSpinner />
         </div>);
     }
 
     if (!userRefreshed){
-        return (<div className="signup-page object-center  flex h-screen">
+        return (<div className="signup-page object-center  flex h-screen negativeMargin">
                 <LoadingSpinner />
                 </div>);
     }
@@ -105,7 +105,7 @@ const SignupPage = () => {
 
     if (!userType){
         return (
-            <div className="signup-page flex h-screen">
+            <div className="signup-page flex h-screen negativeMargin">
                 <div className="flex m-auto">
                     <div className="flex-1 text-gray-700 text-center px-4 py-2 m-2">
                         <div className="font-bold text-green-500">Für Jobsuchende</div>
@@ -120,7 +120,7 @@ const SignupPage = () => {
                         <div className="font-bold text-green-400">Für Landwirte</div>
 
                         <div className="bg-green-400 rounded shadow py-4 my-10 hover:bg-green-700 cursor-pointer ">
-                            Erntejobs kostenen los einstellen
+                            Erntejobs kostenlos einstellen
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@ const SignupPage = () => {
 
     } else {
         return (
-            <div className="signup-page flex h-screen">
+            <div className="signup-page flex h-screen negativeMargin">
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="text-sm cursor-pointer" onClick={ () => {setUserType(undefined)}}>
