@@ -58,13 +58,12 @@ export const JobPosting = ( {jobPosting,jwt,reloadData}) => {
 
                 {((openApplications.length === 0) && (acceptedApplications.length === 0) && (declinedApplications.length === 0)) &&
                 <div className="w-full">
-
                     <img className="w-1/12 m-auto" src="felden-werner-hero-v1.png"/>
                     <div className="w-1/2 m-auto text-center text-gray-600 text-sm mt-10">
                         Leider gibt es noch keine Bewerbungen auf deine Helden Position :( Aber bald werden sich schon die ersten Feldhelden melden
                     </div>
                 </div>}
-                <div>
+                <div className="w-full">
                     {openApplications.length > 0 && (<div className="ml-10">
                         <h2>Potentielle Feldhelden ({openApplications.length})</h2>
                         <div className="flex">
