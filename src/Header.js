@@ -67,12 +67,12 @@ const Header = () => {
           <div className="text-sm lg:flex-grow" style={{textAlign: "right", marginRight: "40px"}}>
 
               { (isAuthenticated && currentUser) && (
-              <Link to="/" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brownhover:text-white mr-4">
+              <Link to="/" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brown hover:text-white mr-4">
                   { (currentUser.userType === "HELPER") ? "Gesuchte Feldhelden" : "Mein Gesuch"}
               </Link>)}
 
               { (isAuthenticated && currentUser && currentUser.userType === "HELPER") && (
-                  <Link to="/helper/applications" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brownhover:text-white mr-4">
+                  <Link to="/helper/applications" className="block mt-4 lg:inline-block lg:mt-0 text-right text-brown hover:text-white mr-4">
                      Meine Bewerbungen
                   </Link>
               )}
@@ -84,7 +84,6 @@ const Header = () => {
               >
                   Feldheld werden
               </button>)}
-
           </div>
 
               {!isAuthenticated && (

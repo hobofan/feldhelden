@@ -50,17 +50,59 @@ function getJwt(request) {
  */
 function decodeJwt(token) {
   const parts = token.split('.');
-  const header = JSON.parse(atob(parts[0]));
-  const payload = JSON.parse(atob(parts[1]));
-  const signature = atob(parts[2].replace(/_/g, '/').replace(/-/g, '+'));
-  console.log(header)
+  const { header, payload, signature } = jwtDecode2(token);
+
   return {
-    header: header,
-    payload: payload,
+    header: JSON.parse(header),
+    payload: JSON.parse(payload),
     signature: signature,
     raw: { header: parts[0], payload: parts[1], signature: parts[2] }
   }
 }
+
+// Taken from https://stackoverflow.com/a/58907605
+// Required because original decodeJwt errored on some JWTs
+const jwtDecode2 = function (jwt) {
+  function b64DecodeUnicode(str) {
+      return decodeURIComponent(atob(str).replace(/(.)/g, function (m, p) {
+          var code = p.charCodeAt(0).toString(16).toUpperCase();
+          if (code.length < 2) {
+              code = '0' + code;
+          }
+          return '%' + code;
+      }));
+  }
+
+  function decode(str) {
+      var output = str.replace(/-/g, "+").replace(/_/g, "/");
+      switch (output.length % 4) {
+          case 0:
+              break;
+          case 2:
+              output += "==";
+              break;
+          case 3:
+              output += "=";
+              break;
+          default:
+              throw "Illegal base64url string!";
+      }
+
+      try {
+          return b64DecodeUnicode(output);
+      } catch (err) {
+          return atob(output);
+      }
+  }
+
+  var jwtArray = jwt.split('.');
+
+  return {
+      header: decode(jwtArray[0]),
+      payload: decode(jwtArray[1]),
+      signature: decode(jwtArray[2])
+  };
+};
 
 /**
  * Validate the JWT.
