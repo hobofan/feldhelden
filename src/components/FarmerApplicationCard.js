@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import Modal from 'react-modal';
 import * as api from "../api";
+import {useHistory} from "react-router-dom";
 
 const APPLICATION_STATUS_TRANSLATIONS = {
     "APPLIED": "Neu",
@@ -10,18 +10,19 @@ const APPLICATION_STATUS_TRANSLATIONS = {
 
 export const FarmerApplicationCard = (props) => {
 
-    console.log(props)
-    const handle = (bla, evt) => {
+    const handle = (status, evt) => {
         evt.preventDefault();
         const content = {
+            applicationId: props._id,
             newApplication: {
-                status: "TODO",
+                status: status,
                 position: props.position,
-                info: props.info}
+                info: props.info
+            }
         };
 
         api.updateJobApplicationFarmer(props.jwt, content).then((responseData) => {
-            console.log("Job posting geupdated");
+            props.reloadData()
         }).catch((test) => {
             console.log("failed to update the job posting")
         });
@@ -63,7 +64,7 @@ export const FarmerApplicationCard = (props) => {
                         <span> {props.applicant.phone && props.applicant.phone} </span>
                     </div>
 
-                    <div className="flex">
+                    {props.status === "APPLIED" && (<div className="flex">
                         <div className="w-1/2 p-2">
                             <button
                                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
@@ -80,7 +81,7 @@ export const FarmerApplicationCard = (props) => {
                                 Bewerber ablehnen
                             </button>
                         </div>
-                    </div>
+                    </div>)}
 
                     <p className="text-gray-700 text-sm my-2">
                         Bitte kontaktieren Sie den Feldhelden direkt nachdem Sie den Feldhelden akzeptiert haben.

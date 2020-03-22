@@ -6,11 +6,13 @@ import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
 import {useInput} from '../hooks/input-hook';
 import {JobPosting} from "../components/FarmerJobPostingOverview";
+import {LoadingSpinner} from "../components/Loading";
 
 const FarmerDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [jwt, setJwt] = useState();
   const [jobPostings, setJobPostings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated || jwt) {
@@ -31,26 +33,45 @@ const FarmerDashboardPage = () => {
       return;
     }
     api.listFarmerJobPostings(jwt)
-      .then((res) => setJobPostings(res.currentUser.ownedJobPostings.data));
+      .then((res) => {
+          setJobPostings(res.currentUser.ownedJobPostings.data)
+          setIsLoading(false);
+      }).catch((error)=>{
+        setIsLoading(false);
+    });
   }, [jwt]);
 
-  console.log('secrets', jobPostings);
+  const reloadApplications =() => {
+      setIsLoading(true);
+      api.listFarmerJobPostings(jwt)
+          .then((res) => {
+              setJobPostings(res.currentUser.ownedJobPostings.data);
+              setIsLoading(false);
+          }).catch((error)=>{
+          setIsLoading(false);
+      });;
+  };
 
   return (
     <div className="mx-auto">
-      <ShowOrCreateJobPosting jobPostings={jobPostings} jwt={jwt} />
+        <ShowOrCreateJobPosting jobPostings={jobPostings}
+                                jwt={jwt}
+                                reloadApplications={reloadApplications}
+                                isLoading={isLoading} />
     </div>
   );
 };
 
-const ShowOrCreateJobPosting = ({jobPostings,jwt}) => {
+const ShowOrCreateJobPosting = ({jobPostings,jwt,reloadApplications, isLoading}) => {
   const hasJobPosting = jobPostings.length > 0;
+  if(isLoading){
+      return ( <div className="flex h-screen"> <LoadingSpinner /> </div>)
+  }
 
-  // TODO Loader
   if (hasJobPosting) {
     const jobPosting = jobPostings[0];
     return (
-      <JobPosting jobPosting={jobPosting} jwt={jwt} />
+      <JobPosting jobPosting={jobPosting} jwt={jwt} reloadData={reloadApplications} />
     );
   } else {
     return (

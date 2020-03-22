@@ -1,7 +1,7 @@
 import React from "react";
 import {FarmerApplicationCard} from "./FarmerApplicationCard";
 
-export const JobPosting = ( {jobPosting,jwt}) => {
+export const JobPosting = ( {jobPosting,jwt,reloadData}) => {
 
     const jobDetailFields = jobPosting && jobPosting.jobDetails.data.map(detail => {
         return (<span
@@ -11,20 +11,17 @@ export const JobPosting = ( {jobPosting,jwt}) => {
       </span>)
     });
 
-    console.log(jobPosting)
-
     const openApplications = jobPosting.applicants.data.filter((application) => application.status === "APPLIED").map(applicant => {
-        return <FarmerApplicationCard {...applicant} jwt={jwt} key={applicant._id}/>
+        return <FarmerApplicationCard {...applicant} reloadData={reloadData} jwt={jwt} key={applicant._id}/>
     });
 
     const declinedApplications = jobPosting.applicants.data.filter((application) => application.status === "DECLINED").map(applicant => {
-        return <FarmerApplicationCard {...applicant} jwt={jwt} key={applicant._id}/>
+        return <FarmerApplicationCard {...applicant}  reloadData={reloadData} jwt={jwt} key={applicant._id}/>
     });
 
     const acceptedApplications = jobPosting.applicants.data.filter((application) => application.status === "ACCEPTED").map(applicant => {
-        return <FarmerApplicationCard {...applicant} jwt={jwt} key={applicant._id}/>
+        return <FarmerApplicationCard {...applicant}  reloadData={reloadData} jwt={jwt} key={applicant._id}/>
     });
-    console.log(jwt);
 
     return (
         <div class="mx-auto ml-10 ">
@@ -57,7 +54,7 @@ export const JobPosting = ( {jobPosting,jwt}) => {
                 </div>
             </div>)}
             {acceptedApplications.length > 0 && (<div className="ml-10">
-                <h2>Deine Feldhelden ({declinedApplications.length})</h2>
+                <h2>Deine Feldhelden ({acceptedApplications.length})</h2>
                 <div className="flex">
                     {acceptedApplications}
                 </div>
