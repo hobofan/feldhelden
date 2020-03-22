@@ -8,6 +8,7 @@ type JobContact {
    lat: Float!
    lon: Float!
    address: String!
+   institution: String!
 }
 
 type JobPosting {

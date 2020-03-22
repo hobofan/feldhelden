@@ -139,6 +139,7 @@ const CreateJobPostingForm = ({ jwt }) => {
   const [address, setAddress] = useState('');
   const {value: title, bind: bindTitle} = useInput('');
   const {value: description, bind: bindDescription} = useInput('');
+  const {value: institution, bind: bindInstitution} = useInput('');
 
   const handleSubmit = (evt) => {
       evt.preventDefault();
@@ -152,6 +153,7 @@ const CreateJobPostingForm = ({ jwt }) => {
           lat: mapPosition.lat,
           lon: mapPosition.lng,
           address,
+          institution
         },
         jobDetails,
       }
@@ -209,6 +211,15 @@ const CreateJobPostingForm = ({ jwt }) => {
 
           <div className="my-4">
             <div className="w-full px-3 mb-6 md:mb-0">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                       htmlFor="institution">
+                    Betrieb
+                </label>
+                <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="institution" type="text" placeholder="Spargelhof Schönewelt"
+                    {...bindInstitution}
+                />
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                        htmlFor="title">
                     Überschrift
