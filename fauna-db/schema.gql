@@ -16,6 +16,7 @@ type JobPosting {
     description: String!
     jobContact: JobContact!
     jobDetails: [JobDetail]! @relation
+    applicants: [JobApplication] @relation
 }
 
 enum USER_TYPE {
@@ -42,6 +43,7 @@ enum APPLICATION_STATUS {
 
 type JobApplication {
     jobPosting: JobPosting!
+    status: APPLICATION_STATUS!
     position: String!
     info: String!
     applicant: User!

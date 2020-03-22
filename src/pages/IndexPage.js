@@ -40,8 +40,8 @@ const IndexPage = () => {
 
     }else {
         return(
-            <div className="home-page h-screen">
-                <div className="container flex">
+            <div className="home-page">
+                <div className="hero-section h-screen container flex">
                     <div className="carrotImg">
                         <img src="/felden-werner-hero-v1.png" />
                     </div>
@@ -75,9 +75,15 @@ const IndexPage = () => {
                         </div>
                     </div>
                 </div>
-
+                <div style={{ backgroundColor: '#6defec' }} className="info-section text-color-earth text-center">
+                  <p className="py-2 text-xl">
+                    Dieses Projekt wurde im Rahmen des <a href="https://wirvsvirushackathon.org/" className="underline">WirvsVirus Hackathon</a> kreirt.
+                  </p>
+                  <p className="py-2 text-xl">
+                    Der komplette Quellcode is open source und frei zugänglich auf <a href="https://github.com/hobofan/feldhelden" className="underline">GitHub</a> verfügbar.
+                  </p>
+                </div>
             </div>
-        
         )
 
     }
