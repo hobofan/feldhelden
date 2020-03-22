@@ -50,20 +50,18 @@ function getJwt(request) {
  */
 function decodeJwt(token) {
   const parts = token.split('.');
-  // const header = JSON.parse(atob(parts[0]));
-  // const payload = JSON.parse(atob(parts[1]));
-  // const signature = atob(parts[2].replace(/_/g, '/').replace(/-/g, '+')); // TODO: fix
   const { header, payload, signature } = jwtDecode2(token);
-  console.log(header)
+
   return {
-    header: header,
-    payload: payload,
+    header: JSON.parse(header),
+    payload: JSON.parse(payload),
     signature: signature,
     raw: { header: parts[0], payload: parts[1], signature: parts[2] }
   }
 }
 
 // Taken from https://stackoverflow.com/a/58907605
+// Required because original decodeJwt errored on some JWTs
 const jwtDecode2 = function (jwt) {
   function b64DecodeUnicode(str) {
       return decodeURIComponent(atob(str).replace(/(.)/g, function (m, p) {
