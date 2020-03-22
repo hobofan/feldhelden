@@ -8,8 +8,12 @@ import {LoadingSpinner} from "../components/Loading";
 
 
 const IndexPage = () => {
+    const TITLE_HE = "der Held";
+    const TITLE_SHE = "die Heldin";
+
     const {isAuthenticated, getIdTokenClaims, user, loginWithRedirect, loading} = useAuth0();
     const [jwt, setJwt] = useState();
+    const [title, setTitle] = useState(TITLE_SHE);
     const history = useHistory();
 
 
@@ -21,6 +25,15 @@ const IndexPage = () => {
             return
         }
     }, [isAuthenticated]);
+
+    useEffect(() => {
+      const random = Math.random() >= 0.5;
+      if (random) {
+        setTitle(TITLE_HE);
+      } else {
+        setTitle(TITLE_SHE);
+      }
+    }, []);
 
     if (loading) {
         return ( <div className="signup-page flex h-screen"> <LoadingSpinner /> </div>)
@@ -34,7 +47,7 @@ const IndexPage = () => {
                     </div>
                     <div className="headlineContainer">
                         <div>
-                            <h1>Werde der Held</h1>
+                            <h1>Werde {title}</h1>
                             <h1>vom <span className="green">Erdbeerfeld</span></h1>
 
                         </div>
