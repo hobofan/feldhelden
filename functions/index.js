@@ -148,14 +148,16 @@ const handleListFarmerJobPostings = async (request) => {
               address
             }
             applicants {
-              status
-              position
-              info
-              applicant {
-                firstName
-                lastName
-                email
-                phone
+              data {
+                status
+                position
+                info
+                applicant {
+                  firstName
+                  lastName
+                  email
+                  phone
+                }
               }
             }
           }
