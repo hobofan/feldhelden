@@ -76,31 +76,20 @@ const Header = () => {
                      Meine Bewerbungen
                   </Link>
               )}
-              {!isAuthenticated && (<button
-                  className="block mt-4 lg:inline-block lg:mt-0 text-right text-brown hover:text-white"
-                  onClick={() => {
-                      loginWithRedirect({ landhelden_login_hint: 'signUp' })
-                  }}
-              >
-                  Feldheld werden
-              </button>)}
           </div>
-
               {!isAuthenticated && (
                   <button  className="inline-block text-sm px-4 py-2 leading-none border rounded text-brown border-brown hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
                            onClick={() => loginWithRedirect({
                       redirect_uri: `${api.getUrlBaseRedirects()}/signup`
                   })}>Einloggen</button>
               )}
-
               {isAuthenticated && <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-brown border-brown hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-                                           onClick={() => logout()}>Ausloggen</button>}
+                                           onClick={() => logout()}>
+                  Ausloggen
+              </button>}
               {isAuthenticated && user &&  <img className="inline-block leading-none h-16 sm:h-16 rounded-full ml-2" src={user.picture}/>}
-
         </div>
       </nav>
-
-
     )
 };
 
