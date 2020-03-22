@@ -152,10 +152,12 @@ const handleListFarmerJobPostings = async (request) => {
             }
             applicants {
               data {
+                _id
                 status
                 position
                 info
                 applicant {
+                  _id
                   firstName
                   lastName
                   email

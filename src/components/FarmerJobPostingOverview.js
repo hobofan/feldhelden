@@ -1,7 +1,8 @@
 import React from "react";
 import {FarmerApplicationCard} from "./FarmerApplicationCard";
 
-export const JobPosting = ({jobPosting, jwt}) => {
+export const JobPosting = ( {jobPosting,jwt}) => {
+
     const jobDetailFields = jobPosting && jobPosting.jobDetails.data.map(detail => {
         return (<span
             key={detail._id}
@@ -10,9 +11,20 @@ export const JobPosting = ({jobPosting, jwt}) => {
       </span>)
     });
 
-    const openApplications = jobPosting.applicants.data.map(applicant => {
+    console.log(jobPosting)
+
+    const openApplications = jobPosting.applicants.data.filter((application) => application.status === "APPLIED").map(applicant => {
         return <FarmerApplicationCard {...applicant} jwt={jwt} key={applicant._id}/>
-    })
+    });
+
+    const declinedApplications = jobPosting.applicants.data.filter((application) => application.status === "DECLINED").map(applicant => {
+        return <FarmerApplicationCard {...applicant} jwt={jwt} key={applicant._id}/>
+    });
+
+    const acceptedApplications = jobPosting.applicants.data.filter((application) => application.status === "ACCEPTED").map(applicant => {
+        return <FarmerApplicationCard {...applicant} jwt={jwt} key={applicant._id}/>
+    });
+    console.log(jwt);
 
     return (
         <div class="mx-auto ml-10 ">
@@ -38,10 +50,23 @@ export const JobPosting = ({jobPosting, jwt}) => {
                 </div>
                 {jobDetailFields}
             </div>
-            <h2>Offene Bewerbungen ({jobPosting.applicants.data.length})</h2>
-            <div className="ml-10">
-                {openApplications}
-            </div>
+            {openApplications.length > 0 && (<div className="ml-10">
+                <h2>Potentielle Feldhelden ({openApplications.length})</h2>
+                <div className="flex">
+                    {openApplications}
+                </div>
+            </div>)}
+            {acceptedApplications.length > 0 && (<div className="ml-10">
+                <h2>Deine Feldhelden ({declinedApplications.length})</h2>
+                <div className="flex">
+                    {acceptedApplications}
+                </div>
+            </div>)}
+
+            {declinedApplications.length > 0 && (<div className="ml-10">
+                <h2>Abglehnte Bewerber ({declinedApplications.length})</h2><div className="flex">
+                {declinedApplications}</div>
+            </div>)}
         </div>
     );
 

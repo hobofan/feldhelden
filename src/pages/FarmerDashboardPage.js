@@ -43,14 +43,14 @@ const FarmerDashboardPage = () => {
   );
 };
 
-const ShowOrCreateJobPosting = ({ jobPostings, jwt }) => {
+const ShowOrCreateJobPosting = ({jobPostings,jwt}) => {
   const hasJobPosting = jobPostings.length > 0;
 
   // TODO Loader
   if (hasJobPosting) {
     const jobPosting = jobPostings[0];
     return (
-      <JobPosting jobPosting={jobPosting} />
+      <JobPosting jobPosting={jobPosting} jwt={jwt} />
     );
   } else {
     return (

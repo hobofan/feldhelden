@@ -124,6 +124,23 @@ const postJobApplication = async  (jwt,content) => {
   })
       .then(res => res.json())
       .then(res => res);
+};
+
+
+const updateJobApplicationFarmer = async  (jwt, content) => {
+  const apiBase = getApiBase();
+
+  return await fetch(`${apiBase}api/me/farmer/updatejobapplication`, {
+    method: 'POST',
+    headers: {
+      Authorization: authHeader(jwt),
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(content)
+  })
+      .then(res => res.json())
+      .then(res => res);
 }
 
 const listJobApplicationsHelper = async  (jwt,content) => {
@@ -149,5 +166,6 @@ export {
   postJobPosting,
   listJobPostings,
   postJobApplication,
-  listJobApplicationsHelper
+  listJobApplicationsHelper,
+  updateJobApplicationFarmer
 };
