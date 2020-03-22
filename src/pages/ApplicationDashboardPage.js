@@ -35,12 +35,10 @@ const ApplicationDashboardPage = () => {
         api.listJobApplicationsHelper(jwt).then(
             applicationsResponse => {
                 if (applicationsResponse && applicationsResponse.currentUser &&  applicationsResponse.currentUser.ownedJobApplications.data){
-
                     const data = applicationsResponse.currentUser.ownedJobApplications.data;
                     const _openApplications = data.filter((job)=>{ return (job.status ==="APPLIED")});
                     const _declinedApplications = data.filter((job)=>{return (job.status ==="DECLINED")});
                     const _acceptedApplications = data.filter((job)=>{return (job.status ==="ACCEPTED")});
-
                     setOpenApplications(_openApplications);
                     setDeclinedApplications(_declinedApplications);
                     setAcceptedApplications(_acceptedApplications);
