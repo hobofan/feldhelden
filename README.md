@@ -13,11 +13,12 @@ It aims to supplement the usual workforce, that might likely not be able to trav
 
 ## Screenshots
 
+![alt text](./readme/pic3.png)
+
 ![alt text](./readme/pic1.png)
 
 ![alt text](./readme/pic2.png)
 
-![alt text](./readme/pic3.png)
 
 ## Tools used
 
