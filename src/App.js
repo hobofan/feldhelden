@@ -72,11 +72,11 @@ const App = () => {
             <PrivateRoute path="/farmerdashboard">
               <FarmerDashboardPage />
             </PrivateRoute>
-            <Route path="/">
-              <IndexPage/>
-            </Route>
             <Route path="/impressum">
               <ImpressumPage/>
+            </Route>
+            <Route path="/">
+              <IndexPage/>
             </Route>
           </Switch>
         </div>
