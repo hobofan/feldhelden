@@ -125,7 +125,7 @@ const JobDetailForm = ({ i, jobDetail, onChangeJobDetail }) => {
         </label>
         <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id={positionId} type="text" placeholder="Spargelpflücker"
+            id={positionId} type="text" placeholder="Spargelstecher"
             {...bindPosition}
         />
     </div>
@@ -234,7 +234,7 @@ const CreateJobPostingForm = ({ jwt, onJobPostingCreated }) => {
                 </label>
                 <input
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="title" type="text" placeholder="Spargelpflücken im Freien!"
+                    id="title" type="text" placeholder="Spargelstecher im Freien!"
                     {...bindTitle}
                 />
             </div>
