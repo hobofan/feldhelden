@@ -53,7 +53,7 @@ export const JobPosting = ( {jobPosting,jwt,reloadData}) => {
                 </div>
             </div>
 
-            <h1 className="text-2xl mt-10 ">Bewerbungen auf deine stellen</h1>
+            <h1 className="text-2xl mt-10 ">Bewerbungen auf Dein Gesuch</h1>
             <div className="mx-auto mr-10 bg-white p-4 rounded shadow flex">
 
                 {((openApplications.length === 0) && (acceptedApplications.length === 0) && (declinedApplications.length === 0)) &&
