@@ -88,7 +88,7 @@ const ApplicationDashboardPage = () => {
     return (
         <div className="my-10 ml-10">
             <h1 className="text-2xl ">Deine Bewerbungen auf einen Blick</h1>
-            <span className="p-10">Finde hier einen Überblick über alle deine Bewerbungen! Bitte denke daran, dass ein Landwirt nicht alle Feldhelden aktzeptieren kann. Nachdem er deine Bewerbung bekommen und akzeptiert hat wird der Landwirt dich per Email oder Telefon kontaktieren.</span>
+            <div className="mt-5 pr-10">Finde hier einen Überblick über alle deine Bewerbungen! Bitte denke daran, dass ein Landwirt nicht alle Feldhelden aktzeptieren kann. Nachdem er deine Bewerbung bekommen und akzeptiert hat wird der Landwirt dich per Email oder Telefon kontaktieren.</div>
 
             {openApplications.length >0 ? applicationsOverview : (
                 <div className="flex h-screen -mt-200">

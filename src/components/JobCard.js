@@ -32,7 +32,7 @@ export const JobsCard = (props) => {
 
     const openModal = () => {
         setIsOpen(true);
-    }
+    };
     function closeModal(){
         setIsOpen(false);
     }
@@ -55,7 +55,6 @@ export const JobsCard = (props) => {
             }
             setJwt(newJwt);
         }
-        fetch();
     }, [isAuthenticated, getIdTokenClaims, setJwt, jwt]);
 
     useEffect(() => {
@@ -76,7 +75,6 @@ export const JobsCard = (props) => {
                 _id: props._id
             }
         };
-        console.log(requestData);
         api.postJobApplication(jwt,requestData).then((responseData)=> {
             closeModal();
             openSuccessModal()
@@ -93,10 +91,6 @@ export const JobsCard = (props) => {
         </span>)
     });
 
-    if( props && props.jobDetails.data && !appliedPosition){
-        setAppliedPosition( props && props.jobDetails.data[0].positionNeeded)
-    }
-
     return (
         <div className="w-1/2 p-2">
             <Modal
@@ -111,7 +105,7 @@ export const JobsCard = (props) => {
                            htmlFor="description">
                         Jobbeschreibung
                     </label>
-                    <p id="description"className="text-gray-700 text-base my-2">
+                    <p id="description" className="text-gray-700 text-base my-2">
                        {props.description}
                     </p>
                     <div className="text-sm mb-2 text-gray-800">
@@ -138,12 +132,13 @@ export const JobsCard = (props) => {
                                 Welche Art von Feldheld möchtest du werden?
                             </label>
                             <select
-                                value={appliedPosition}
+                                value={props.jobDetails.data[0].positionNeeded}
                                 onChange={(event => {
                                 setAppliedPosition(event.target.value)
                             })}>
+
                                 { (props && props.jobDetails) && props.jobDetails.data.map(detail => {
-                                    return(<option key={detail.positionNeeded} value={detail.positionNeeded}>
+                                    return(<option key={detail._id} value={detail.positionNeeded}>
                                         {detail.positionNeeded}
                                     </option>)
                                 })}

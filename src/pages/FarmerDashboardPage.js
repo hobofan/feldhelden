@@ -5,6 +5,7 @@ import LocationPicker from 'react-location-picker';
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
 import {useInput} from '../hooks/input-hook';
+import {JobPosting} from "../components/FarmerJobPostingOverview";
 
 const FarmerDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
@@ -45,9 +46,9 @@ const FarmerDashboardPage = () => {
 const ShowOrCreateJobPosting = ({ jobPostings, jwt }) => {
   const hasJobPosting = jobPostings.length > 0;
 
+  // TODO Loader
   if (hasJobPosting) {
     const jobPosting = jobPostings[0];
-
     return (
       <div>
         <JobPosting jobPosting={jobPosting} />
@@ -62,13 +63,8 @@ const ShowOrCreateJobPosting = ({ jobPostings, jwt }) => {
   }
 }
 
-const JobPosting = ({ jobPosting }) => {
-  return (
-    <div>
-      Deine bereits erstellter Ausscheibung: {jobPosting.title}
-    </div>
-  );
-}
+
+
 
 const JobDetailForm = ({ key , jobDetail, onChangeJobDetail }) => {
   const {value: position, bind: bindPosition} = useInput(jobDetail.positionNeeded);
@@ -165,7 +161,6 @@ const CreateJobPostingForm = ({ jwt }) => {
   return (
     <div>
       <form className="max-w-lg m-auto" onSubmit={handleSubmit}>
-
           {error && <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 bg-red-200 rounded  py-3 px-4">
                   {error}

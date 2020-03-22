@@ -140,6 +140,7 @@ const handleListFarmerJobPostings = async (request) => {
       currentUser(auth0Id: $auth0Id) {
         ownedJobPostings {
           data {
+            _id
             title
             description
             jobContact {
