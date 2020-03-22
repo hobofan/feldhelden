@@ -77,7 +77,7 @@ const IndexPage = () => {
                 </div>
                 <div style={{ backgroundColor: '#6defec' }} className="info-section text-color-earth text-center">
                   <p className="py-2 text-xl">
-                    Dieses Projekt wurde im Rahmen des <a href="https://https://wirvsvirushackathon.org/" className="underline">WirvsVirus Hackathon</a> kreirt.
+                    Dieses Projekt wurde im Rahmen des <a href="https://wirvsvirushackathon.org/" className="underline">WirvsVirus Hackathon</a> kreirt.
                   </p>
                   <p className="py-2 text-xl">
                     Der komplette Quellcode is open source und frei zugänglich auf <a href="https://github.com/hobofan/feldhelden" className="underline">GitHub</a> verfügbar.
