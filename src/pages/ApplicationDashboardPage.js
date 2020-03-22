@@ -9,7 +9,7 @@ const ApplicationDashboardPage = () => {
     const [jwt, setJwt] = useState();
     const [secrets, setSecrets] = useState({});
 
-    const [applications, setApplications] = useState([])
+    const [openApplications, setOpenApplications] = useState([])
 
     useEffect(() => {
         if (!isAuthenticated || jwt) {
@@ -38,17 +38,20 @@ const ApplicationDashboardPage = () => {
         }
         api.listJobApplicationsHelper(jwt).then(
             applicationsResponse => {
-               console.log(applicationsResponse)
+                if (applicationsResponse && applicationsResponse.currentUser &&  applicationsResponse.currentUser.ownedJobApplications.data){
+                    setOpenApplications(applicationsResponse.currentUser.ownedJobApplications.data)
+                    console.log(openApplications)
+                }
             }
         );
     }, [isAuthenticated, jwt]);
 
     return (
         <div className="">
-            <h1 className="text-2xl my-10">Offene Jobs für Feldenhelden</h1>
-            <div className="flex flex-wrap flex-row">
+            <h1 className="text-2xl my-10 ml-10">Deine Jobs</h1>
+                <div className="flex flex-wrap flex-row">
 
-            </div>
+                </div>
         </div>
     );
 };

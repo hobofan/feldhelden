@@ -166,6 +166,7 @@ const handleListMyApplications  = async (request) => {
             _id
             info
             position
+            status
             jobPosting{
               title
             }
@@ -283,6 +284,7 @@ const handleCreateJobApplication = async (request) => {
 
   jobApplication.jobPosting = { connect: jobPosting._id };
   jobApplication.applicant = { connect: userId };
+  jobApplication.status = "APPLIED";
 
   const variables = {
     data: jobApplication,

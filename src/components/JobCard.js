@@ -98,7 +98,7 @@ export const JobsCard = (props) => {
     }
 
     return (
-        <div className="w-2/6 p-2">
+        <div className="w-1/2 p-2">
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

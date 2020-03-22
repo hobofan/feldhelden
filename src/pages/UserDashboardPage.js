@@ -65,8 +65,8 @@ const UserDashboardPage = () => {
       indexName={indexName}
       searchClient={searchClient}
     >
-    <div className="">
-      <h1 className="text-2xl">Offene Jobs für Feldenhelden</h1>
+    <div>
+      <h1 className="text-2xl ml-10">Meine H</h1>
       <div className="flex w-full">
         <div className="flex flex-wrap flex-row w-1/2">
         {jobs && jobs.map(job=>{
