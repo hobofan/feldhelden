@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import * as api from '../api';
 import { useAuth0 } from "../react-auth0-spa";
 import {JobsCard} from "../components/JobCard";
+import {ApplicationCard} from "../components/ApplicationCard";
 
 const ApplicationDashboardPage = () => {
     const { isAuthenticated, getIdTokenClaims } = useAuth0();
@@ -50,7 +51,9 @@ const ApplicationDashboardPage = () => {
         <div className="">
             <h1 className="text-2xl my-10 ml-10">Deine Jobs</h1>
                 <div className="flex flex-wrap flex-row">
-
+                    {openApplications && openApplications.map(application=>{
+                        return (<ApplicationCard {...application} />)
+                    })}
                 </div>
         </div>
     );

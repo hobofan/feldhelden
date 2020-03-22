@@ -169,6 +169,16 @@ const handleListMyApplications  = async (request) => {
             status
             jobPosting{
               title
+              jobContact {
+                lat
+                lon
+                address
+              }
+              jobOwner {
+                firstName
+                lastName
+                email
+              }
             }
           }
         }
@@ -178,7 +188,7 @@ const handleListMyApplications  = async (request) => {
   const variables = { auth0Id: auth0UserId };
   const data = await graphQLClient.request(query,variables);
   return data
-}
+};
 
 const handleListJobPostings = async (request) => {
   const graphQLClient = makeGQLClient();
