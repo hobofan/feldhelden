@@ -9,11 +9,12 @@ import Helmet from "react-helmet";
 
 import * as api from './api';
 import Header from './Header';
+import FarmerDashboardPage from './pages/FarmerDashboardPage.js';
+import ImpressumPage from './pages/ImpressumPage.js';
 import IndexPage from './pages/IndexPage';
 import OtherPage from './pages/OtherPage.js';
 import SignupPage from './pages/SignupPage.js';
 import UserDashboardPage from './pages/UserDashboardPage.js';
-import FarmerDashboardPage from './pages/FarmerDashboardPage.js';
 import { useAuth0, Auth0Provider } from "./react-auth0-spa";
 import authConfig from "./auth_config.json";
 import history from "./utils/history";
@@ -73,6 +74,9 @@ const App = () => {
             </PrivateRoute>
             <Route path="/">
               <IndexPage/>
+            </Route>
+            <Route path="/impressum">
+              <ImpressumPage/>
             </Route>
           </Switch>
         </div>
