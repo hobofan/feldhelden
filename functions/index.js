@@ -54,6 +54,8 @@ const handleApiRequest = async (request) => {
     return await handleListJobPostings(request)
   } else if (routeUrl.startsWith('/api/me/farmer/createjobposting')) {
     return await handleCreateFarmerJobPostings(request);
+  } else if (routeUrl.startsWith('/api/me/farmer/updatejobapplication')) {
+    return await handleUpdateFarmerJobApplication(request);
   } else if (routeUrl.startsWith('/api/me/helper/jobapplications/list')) {
     return await handleListMyApplications(request);
   } else if (routeUrl.startsWith('/api/me/helper/jobapplication')) {
@@ -298,6 +300,48 @@ const handleCreateFarmerJobPostings = async (request) => {
   return data
 };
 
+const handleUpdateFarmerJobApplication = async (request) => {
+  const graphQLClient = makeGQLClient();
+  const algoliaIndex = makeAlgoliaIndex();
+  if (!request.jwt) {
+    return null;
+  }
+  const bodyText = await request.text();
+  const body =  JSON.parse(bodyText);
+  const userId = await getFaunaUserIdFromJwt(request.jwt);
+  const { applicationId, newStatus } = body;
+
+  const query = `
+    mutation UpdateJobPosting($data: JobPostingInput!){
+      updateJobPosting(data: $data) {
+        _id
+      }
+    }
+  `;
+
+  const {jobPosting, jobContact, jobDetails} = body;
+  jobPosting.jobOwner = { connect: userId };
+  jobPosting.jobContact = { create: jobContact };
+  jobPosting.jobDetails = { create: jobDetails };
+
+  const variables = {
+    data: jobPosting,
+  };
+
+  const data = await graphQLClient.request(query, variables);
+  const jobPostingId = data.createJobPosting._id;
+
+  const algoliaObject = {
+    objectID: jobPostingId,
+    fullObject: jobPosting,
+    _geoloc: {
+      lat: jobPosting.jobContact.create.lat,
+      lng: jobPosting.jobContact.create.lon,
+    }
+  };
+  await algoliaIndex.saveObject(algoliaObject);
+  return data
+};
 
 const handleCreateJobApplication = async (request) => {
   const graphQLClient = makeGQLClient();
