@@ -46,7 +46,7 @@ const FarmerDashboardPage = () => {
     if (!jwt) {
       return;
     }
-    loadJobPostings();
+    loadJobPostings(jwt);
   }, [jwt]);
 
   const reloadApplications =() => {

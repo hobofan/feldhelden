@@ -100,6 +100,10 @@ export const JobsCard = (props) => {
                        {props.description}
                     </p>
                     <div className="text-sm mb-2 text-gray-800">
+                        <i className="fas fa-warehouse my-2 mr-2"/>
+                        <span>{props.jobContact.institution} </span>
+                    </div>
+                    <div className="text-sm mb-2 text-gray-800">
                         <i className="fas fa-map-marked-alt my-2 mr-2"/>
                         <span>{props.jobContact.address} </span>
                     </div>
@@ -169,6 +173,10 @@ export const JobsCard = (props) => {
                     <p className="text-gray-700 text-base my-2">
                        {props.description}
                     </p>
+                    <div className="text-sm mb-2 text-gray-800">
+                        <i className="fas fa-warehouse my-2 mr-2"/>
+                        <span>{props.jobContact.institution} </span>
+                    </div>
                     <div className="text-sm mb-2 text-gray-800">
                         <i className="fas fa-map-marked-alt my-2 mr-2"/>
                         <span>{props.jobContact.address} </span>

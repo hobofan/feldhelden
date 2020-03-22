@@ -149,6 +149,7 @@ const handleListFarmerJobPostings = async (request) => {
               lat
               lon
               address
+              institution
             }
             applicants {
               data {
@@ -203,6 +204,7 @@ const handleListMyApplications  = async (request) => {
                 lat
                 lon
                 address
+                institution
               }
               jobOwner {
                 firstName
@@ -238,6 +240,7 @@ const handleListJobPostings = async (request) => {
              lat
              lon
              address
+             institution
         }
         jobOwner {
             firstName
