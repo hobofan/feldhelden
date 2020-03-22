@@ -32,17 +32,21 @@ const FarmerDashboardPage = () => {
     fetch();
   }, [isAuthenticated, getIdTokenClaims, setJwt, jwt]);
 
-  useEffect(() => {
-    if (!jwt) {
-      return;
-    }
+  const loadJobPostings = (jwt) => {
     api.listFarmerJobPostings(jwt)
       .then((res) => {
           setJobPostings(res.currentUser.ownedJobPostings.data)
           setIsLoading(false);
       }).catch((error)=>{
         setIsLoading(false);
-    });
+      });
+  };
+
+  useEffect(() => {
+    if (!jwt) {
+      return;
+    }
+    loadJobPostings();
   }, [jwt]);
 
   const reloadApplications =() => {
@@ -58,15 +62,18 @@ const FarmerDashboardPage = () => {
 
   return (
     <div className="mx-auto">
-        <ShowOrCreateJobPosting jobPostings={jobPostings}
-                                jwt={jwt}
-                                reloadApplications={reloadApplications}
-                                isLoading={isLoading} />
+      <ShowOrCreateJobPosting
+        jobPostings={jobPostings}
+        jwt={jwt}
+        reloadApplications={reloadApplications}
+        isLoading={isLoading}
+        onJobPostingCreated={() => loadJobPostings(jwt)}
+      />
     </div>
   );
 };
 
-const ShowOrCreateJobPosting = ({jobPostings,jwt,reloadApplications, isLoading}) => {
+const ShowOrCreateJobPosting = ({jobPostings,jwt,reloadApplications, isLoading, onJobPostingCreated}) => {
   const hasJobPosting = jobPostings.length > 0;
   if(isLoading){
       return ( <div className="flex h-screen"> <LoadingSpinner /> </div>)
@@ -79,7 +86,7 @@ const ShowOrCreateJobPosting = ({jobPostings,jwt,reloadApplications, isLoading})
     );
   } else {
     return (
-      <CreateJobPostingForm jwt={jwt} />
+      <CreateJobPostingForm jwt={jwt} onJobPostingCreated={onJobPostingCreated}/>
     )
   }
 }
@@ -125,7 +132,7 @@ const JobDetailForm = ({ i, jobDetail, onChangeJobDetail }) => {
   );
 };
 
-const CreateJobPostingForm = ({ jwt }) => {
+const CreateJobPostingForm = ({ jwt, onJobPostingCreated }) => {
   const defaultPosition = {
     lat: 51.10,
     lng: 10.20,
@@ -160,6 +167,7 @@ const CreateJobPostingForm = ({ jwt }) => {
 
       api.postJobPosting(jwt,content).then((responseData)=> {
           console.log("Job posting erstellt");
+          onJobPostingCreated();
       }).catch((test)=>{
           setError("Registrierung fehlgeschlagen bitte probiere es nochmal!");
       });
@@ -237,7 +245,7 @@ const CreateJobPostingForm = ({ jwt }) => {
                 </label>
                 <textarea
                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="description" type="text" placeholder=""
+                    id="description" type="text" placeholder="Aufgaben, Zeitraum, Unterkunft, etc."
                     {...bindDescription}
                 />
             </div>
