@@ -303,44 +303,28 @@ const handleCreateFarmerJobPostings = async (request) => {
 
 const handleUpdateFarmerJobApplication = async (request) => {
   const graphQLClient = makeGQLClient();
-  const algoliaIndex = makeAlgoliaIndex();
   if (!request.jwt) {
     return null;
   }
   const bodyText = await request.text();
   const body =  JSON.parse(bodyText);
   const userId = await getFaunaUserIdFromJwt(request.jwt);
-  const { applicationId, newStatus } = body;
+  const { applicationId, newApplication } = body;
 
   const query = `
-    mutation UpdateJobPosting($data: JobPostingInput!){
-      updateJobPosting(data: $data) {
+    mutation updateJobApplication($applicationId: ID!, $data: JobApplicationInput!) {
+      updateJobApplication(id: $applicationId, data: $data) {
         _id
       }
     }
   `;
 
-  const {jobPosting, jobContact, jobDetails} = body;
-  jobPosting.jobOwner = { connect: userId };
-  jobPosting.jobContact = { create: jobContact };
-  jobPosting.jobDetails = { create: jobDetails };
-
   const variables = {
-    data: jobPosting,
+    applicationId,
+    data: newApplication,
   };
 
   const data = await graphQLClient.request(query, variables);
-  const jobPostingId = data.createJobPosting._id;
-
-  const algoliaObject = {
-    objectID: jobPostingId,
-    fullObject: jobPosting,
-    _geoloc: {
-      lat: jobPosting.jobContact.create.lat,
-      lng: jobPosting.jobContact.create.lon,
-    }
-  };
-  await algoliaIndex.saveObject(algoliaObject);
   return data
 };
 
