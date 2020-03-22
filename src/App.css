@@ -47,17 +47,16 @@ h1, h2, h3, h4 {
   color: #5E3926;
 }
 
-.text-color-earth {
-  color: #5E3926;
-}
-
-.green {
-  color: #55822D !important;
-}
-
+.text-color-earth,
 .text-brown {
   color: #5E3926;
 }
+
+.text-color-green {
+  color: #55822D !important;
+}
+
+
 
 .border-brown {
   border-color: #5E3926;
@@ -73,26 +72,36 @@ h1, h2, h3, h4 {
 
 
 nav {
+  font-weight: 800;
+}
+
+nav button {
+  border: 2px solid #5E3926 !important;
+}
+
+nav button:hover {
+  color: #fff !important;
+  background-color: #5E3926 !important;
 }
 
 
 .home-page {
   background: url('/farm-settingv2.png');
   background-size: cover;
-  margin-top: -90px;
 }
 
 .home-page .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 12%;
 }
 
-.home-page .hero-section {
+.negativeMargin {
+  margin-top: -90px;
 }
 
-.carrotImg {
-  flex: 0.2;
+.backgroundSkyline {
+  background: url('/skyline-gradient.svg');
+  background-size: cover;
 }
 
 .carrotImg img {
@@ -114,16 +123,13 @@ nav {
 }
 
 .headlineContainer {
-  flex: 0.8;
-  display: flex;
-  align-items: left;
-  flex-direction: column;
   padding-left: 8%;
 }
 
 .headlineContainer h1 {
   font-size: 48px;
 }
+
 
 .cta {
   width: 300px;
@@ -138,6 +144,20 @@ nav {
 
 .cta-light-green {
   background-color: #82B43E;
+}
+
+/* Media Queries */ 
+@media(max-width: 640px) {
+  .headlineContainer h1 {
+    font-size: 24px;
+  }
+
+  .cta {
+    width: 240px;
+    font-size: 18px;
+    padding: 20px;
+    border-radius: 8px;
+  }
 }
 
 
