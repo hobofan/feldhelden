@@ -30,7 +30,7 @@ export const JobsCard = (props) => {
 
     const {value: info, bind: bindInfo} = useInput('');
 
-    function openModal() {
+    const openModal = () => {
         setIsOpen(true);
     }
     function closeModal(){
@@ -57,6 +57,12 @@ export const JobsCard = (props) => {
         }
         fetch();
     }, [isAuthenticated, getIdTokenClaims, setJwt, jwt]);
+
+    useEffect(() => {
+      const fallbackCb = () => {};
+      const cb = props.onRefOpenModal || fallbackCb;
+      cb(props._id, openModal);
+    }, [props._id]);
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -101,6 +107,17 @@ export const JobsCard = (props) => {
             >
                 <div className="container w-full">
                     <div className="font-bold text-2xl mb-2 ">Bewerbung für "{props.title}"</div>
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                           htmlFor="description">
+                        Jobbeschreibung
+                    </label>
+                    <p id="description"className="text-gray-700 text-base my-2">
+                       {props.description}
+                    </p>
+                    <div className="text-sm mb-2 text-gray-800">
+                        <i className="fas fa-map-marked-alt my-2 mr-2"/>
+                        <span>{props.jobContact.address} </span>
+                    </div>
                     <form className="w-full" onSubmit={handleSubmit}>
                         <div className="w-full">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"

@@ -20,9 +20,8 @@ const defaultPosition = {
 const UserDashboardPage = () => {
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
   const [jwt, setJwt] = useState();
-  const [secrets, setSecrets] = useState({});
-
   const [jobs, setJobs] = useState([])
+  const [modalOpenRefs, setModalOpenRefs] = useState({});
 
   useEffect(() => {
     if (!isAuthenticated || jwt) {
@@ -42,13 +41,6 @@ const UserDashboardPage = () => {
     if (!jwt) {
       return;
     }
-    api.fetchSecrets(jwt).then(setSecrets);
-  }, [jwt]);
-
-  useEffect(() => {
-    if (!jwt) {
-      return;
-    }
     api.listJobPostings(jwt).then(
         jobsResponse => {
           jobsResponse.jobs && setJobs(jobsResponse.jobs.data)
@@ -56,9 +48,17 @@ const UserDashboardPage = () => {
     );
   }, [isAuthenticated, jwt]);
 
-  const onClickMarker = (marker) => {
+  const handleClickMarker = (marker, key) => {
     console.log(marker);
+    modalOpenRefs[key]();
   };
+
+  const handleModalOpenRef = (key, openRef) => {
+    const newOpenRefs = Object.assign({}, modalOpenRefs);
+    newOpenRefs[key] = openRef;
+    console.log('openRefs', newOpenRefs);
+    setModalOpenRefs(newOpenRefs);
+  }
 
   return (
     <InstantSearch
@@ -70,7 +70,7 @@ const UserDashboardPage = () => {
       <div className="flex w-full">
         <div className="flex flex-wrap flex-row w-1/2">
         {jobs && jobs.map(job=>{
-          return (<JobsCard {...job} key={job._id}/>)
+          return (<JobsCard {...job} key={job._id} onRefOpenModal={handleModalOpenRef}/>)
         })
         }
         </div>
@@ -81,7 +81,7 @@ const UserDashboardPage = () => {
                 {({ hits }) => (
                   <div>
                     {hits.map(hit => (
-                      <Marker key={hit.objectID} hit={hit} onClick={onClickMarker}/>
+                      <Marker key={hit.objectID} hit={hit} onClick={(e) => handleClickMarker(e, hit.objectID)}/>
                     ))}
                   </div>
                 )}
