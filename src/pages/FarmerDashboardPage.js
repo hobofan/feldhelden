@@ -162,7 +162,10 @@ const CreateJobPostingForm = ({ jwt, onJobPostingCreated }) => {
           address,
           institution
         },
-        jobDetails,
+        jobDetails: jobDetails.map(n => ({
+          amountNeeded: parseInt(n.amountNeeded, 10),
+          positionNeeded: n.positionNeeded,
+        })),
       }
 
       api.postJobPosting(jwt,content).then((responseData)=> {
