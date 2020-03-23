@@ -76,6 +76,10 @@ const IndexPage = () => {
                     </div>
                 </div>
                 <div style={{ backgroundColor: '#6defec' }} className="info-section text-color-earth text-center">
+                  <h3 className="text-2xl pt-8 mb-2">Erklärvideo</h3>
+                  <div className="text-center">
+                    <iframe className="mx-auto w-full md:w-1/2" width="560" height="380" src="https://www.youtube.com/embed/2V5X88i0OeY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
                   <p className="py-2 text-xl">
                     Dieses Projekt wurde im Rahmen des <a href="https://wirvsvirushackathon.org/" className="underline">WirvsVirus Hackathon</a> kreiert.
                   </p>
