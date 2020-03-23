@@ -40,7 +40,16 @@ const IndexPage = () => {
 
     }else {
         return(
-            <div className="home-page bg-cover negativeMargin">
+          <>
+            <div className="bg-red-700 py-4 text-center text-white">
+              <div>
+                <a href="https://www.daslandhilft.de/">Zwischenzeitlich ist ein offizielles Portal der Bundesregierung online gegangen. Bitte meldet euch lieber dort an!</a>
+              </div>
+              <div>
+                <a href="https://www.daslandhilft.de/">https://www.daslandhilft.de/</a>
+              </div>
+            </div>
+            <div className="home-page bg-cover">
                 <div className="hero-section pt-32 lg:pt-32 h-screen container flex flex-col md:flex-row">
                     <div className="carrotImg w-full md:w-1/4 items-start">
                         <img src="/felden-werner-hero-v1.png"/>
@@ -88,6 +97,7 @@ const IndexPage = () => {
                   </p>
                 </div>
             </div>
+          </>
         )
 
     }
