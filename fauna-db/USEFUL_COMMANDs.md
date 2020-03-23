@@ -23,3 +23,9 @@ variables:
 
 
 # 
+
+# Auth0 - Query all non-test users
+
+```
+logins_count:{0 TO *] - user_metadata.test_user:true
+```
