@@ -43,10 +43,7 @@ const IndexPage = () => {
           <>
             <div className="bg-red-700 py-4 text-center text-white">
               <div>
-                <a href="https://www.daslandhilft.de/">Zwischenzeitlich ist ein offizielles Portal der Bundesregierung online gegangen. Bitte meldet euch lieber dort an!</a>
-              </div>
-              <div>
-                <a href="https://www.daslandhilft.de/">https://www.daslandhilft.de/</a>
+                <a href="https://www.daslandhilft.de/">Großartige Neuigkeiten: Die Bundesregierung hat die Problematik erkannt und zwischenzeitlich ein großes Portal entwickelt: Lasst uns die Energie bündeln und besucht: www.daslandhilft.de - Vielen Dank für euren Support - Max, Alex & Specki</a>
               </div>
             </div>
             <div className="home-page bg-cover">
